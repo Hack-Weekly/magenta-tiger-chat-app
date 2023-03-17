@@ -2,20 +2,22 @@
   "name": "api",
   "version": "0.0.0",
   "private": true,
+  "type": "commonjs",
   "scripts": {
     "build": "tsc src/index.ts --format cjs",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "dev": "ts-node --esm src/index.ts",
     "lint": "tsc --noEmit && eslint \"src/**/*.ts*\"",
-    "start": "node dist/index.js",
-    "test": "jest --detectOpenHandles"
+    "start": "node dist/index.js"
   },
   "jest": {
     "preset": "jest-presets/jest/node"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
