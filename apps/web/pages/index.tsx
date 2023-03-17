@@ -5,7 +5,7 @@ export default function Web() {
         <div>
             <h1>Web</h1>
             <Button />
-            <Input typeOfInput={"edit"} border={false} width={"100%"} />
+            <Input typeOfInput={"email"} border={true} width={"15rem"} />
         </div>
     )
 }
