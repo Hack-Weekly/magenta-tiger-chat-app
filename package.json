@@ -13,6 +13,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@types/styled-components": "^5.1.26",
     "eslint-config-custom": "*",
     "prettier": "latest",
     "turbo": "latest"
@@ -20,6 +21,13 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.13",
+    "@mui/styled-engine-sc": "^5.11.11",
+    "styled-components": "^5.3.9"
+  },
   "packageManager": "npm@9.3.1"
 }
