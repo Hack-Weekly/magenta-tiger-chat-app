@@ -7,11 +7,14 @@ import SendIcon from "@mui/icons-material/Send"
 import PasswordIcon from "@mui/icons-material/Password"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
 
+// NOTES//
+// callback not fully working yet, but styles do work//
+
 interface InputProps {
     typeOfInput: "search" | "edit" | "send" | "email" | "password"
     border: true | false
     width: "100%" | "20rem" | "15rem" | "10rem"
-    callBack: (value: any) => any | null
+    callBack: any | null
 }
 interface ValidProps {
     validEmail: boolean | null
@@ -141,7 +144,7 @@ function Input({ typeOfInput, border, width, callBack }: InputProps) {
                         alignItems: "center",
                     }}
                     onClick={() => {
-                        funcCall
+                        return funcCall
                     }}
                 >
                     {typeOfInput === "search" ? (
@@ -189,7 +192,7 @@ function Input({ typeOfInput, border, width, callBack }: InputProps) {
                             : ""
                     }}
                 />
-                {typeOfInput === "send" ? buttonWrapper(callBack) : ""}
+                {typeOfInput === "send" ? buttonWrapper(callBack()) : ""}
             </Wrapper>
         </>
     )
