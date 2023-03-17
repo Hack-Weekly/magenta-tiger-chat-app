@@ -1,16 +1,6 @@
 import styled, {css} from "styled-components"
 import GlobalStyle from "./globalStyle/GlobalStyling"
-
-type ButtonProps = {
-  text: string,
-  variant: string, //filled, icon, navicon
-  danger: boolean,
-  disabled: boolean,
-  loading: boolean | { delay: number },
-  ghost: boolean,
-  size: 'large' | 'middle' | 'small',
-  onClick: (event: MouseEvent) => void
-}
+import { ButtonProps } from '../../types/src/ButtonTypes';
 
 const StyledButton = styled.button<ButtonProps>`
   border-radius: 15px;
