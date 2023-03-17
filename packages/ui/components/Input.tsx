@@ -1,18 +1,32 @@
 import styled from "styled-components"
 import GlobalStyle from "./globalStyle/GlobalStyling"
 import SearchIcon from "@mui/icons-material/Search"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import { Email } from "@mui/icons-material"
 
 interface InputProps {
-    type: "search" | "addFriend" | "update" | "sendMessage"
+    typeOfInput: "search" | "edit" | "send" | "email" | "password"
+    border: true | false
+    width: "100%" | "20rem" | "15rem" | "10rem"
 }
-const Wrapper = styled.div`
+
+const Wrapper = styled.div<InputProps>`
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.2rem;
+    justify-content: flex-start;
+    gap: 0.3rem;
     background-color: #e8e7e7;
+    border: ${props => (props.border ? "1px solid grey" : "none")};
     border-radius: 4px;
-    width: fit-content;
+    width: ${props =>
+        props.width === "100%"
+            ? "100%"
+            : props.width === "20rem"
+            ? "20rem"
+            : props.width === "15rem"
+            ? "15rem"
+            : "10rem"};
+    height: 2rem;
 
     &:hover {
         background-color: #e8e7e7da;
@@ -28,16 +42,17 @@ const Icon = styled.div`
 
 const UserInput = styled.input<InputProps>`
     background-color: ${props =>
-        props.type === "search"
+        props.typeOfInput === "search"
             ? "white"
-            : props.type === "addFriend"
+            : props.typeOfInput === "edit"
             ? "green"
-            : props.type === "update"
+            : props.typeOfInput === "send"
             ? "blue"
-            : props.type === "sendMessage"
-            ? "yellow"
+            : props.typeOfInput === "email"
+            ? "white"
             : "white"};
     height: 100%;
+    width: 100%;
     border: none;
     border-radius: 4px;
     background: none;
@@ -49,19 +64,39 @@ const UserInput = styled.input<InputProps>`
         border: none;
 
         &::-webkit-clear-button {
-            color: grey;
+            color: red;
         }
     }
 `
 
-function Input({ type }: InputProps) {
-    // const dyanmicClassName: string = type
+function Input({ typeOfInput, border, width }: InputProps) {
+    const setInputType = () => {
+        const textInputs = ["search", "edit", "send"]
+
+        if (textInputs.includes(typeOfInput)) {
+            return "text"
+        } else if (typeOfInput === "email") {
+            return "email"
+        }
+        return "password"
+    }
+    const dynamicType: string = setInputType()
+
     return (
         <>
             <GlobalStyle />
-            <Wrapper>
-                <SearchIcon fontSize="medium" color="action" />
-                <UserInput type={type} />
+            <Wrapper width={width} border={border} typeOfInput={typeOfInput}>
+                {typeOfInput === "search" ? (
+                    <SearchIcon fontSize="medium" color="action" />
+                ) : typeOfInput === "edit" ? (
+                    <AccountCircleIcon fontSize="medium" color="action" />
+                ) : null}
+                <UserInput
+                    type={dynamicType}
+                    width={width}
+                    border={border}
+                    typeOfInput={typeOfInput}
+                />
             </Wrapper>
         </>
     )
