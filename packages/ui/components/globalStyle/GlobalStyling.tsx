@@ -2,6 +2,12 @@
 import { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`
+  :root {
+    --btn-primary: #1F986C;
+    --btn-primary-text: #F3F3F3;
+    --btn-danger: #E42222
+  }
+
   body {
     margin: 0;
     padding: 0;
