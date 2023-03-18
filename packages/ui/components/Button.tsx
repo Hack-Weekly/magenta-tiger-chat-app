@@ -15,9 +15,22 @@ const Wrapper = styled.div`
 `
 
 const StyledIcon = styled(FontAwesomeIcon)<StyledIconProps>`
-  ${({ active }) =>
+  ${({ active, danger, size }) =>
     css`
-      color: ${active === true ? 'var(--btn-icon-active)' : 'var(--btn-icon)'};
+      color: 
+        ${danger === true
+          ? 'var(--btn-danger)'
+          : active === true 
+          ? 'var(--btn-icon-active)' 
+          : 'var(--btn-icon)'
+        };
+      font-size: 
+        ${size === 'small'
+          ? '0.8rem'
+          : size === 'middle'
+          ? '1.5rem'
+          : '2rem'
+        };
     `
   }
 `
@@ -28,41 +41,58 @@ const StyledButton = styled.button<StyledButtonProps>`
   font-family: 'Poppins';
   font-weight: 500;
   cursor: pointer;
-  ${({ variant }) => 
-    variant === 'primary' &&
+  ${({ variant, active, danger, disabled, size }) => 
     css`
-      background-color: var(--btn-primary);
-      color: var(--btn-primary-text);
-      border: none;
-    `
-  }
-  ${({ variant, active }) => 
-    variant === 'icon' && 
-    css`
-      background-color: transparent;
-      border: none;
-      color: ${active === true ? 'var(--btn-icon-active)' : 'var(--btn-icon)'};
-    `
-  }
-  ${({ variant }) => 
-    variant ==='navIcon' &&
-    css` 
-      background-color: transparent;
-      border: none;
-      color: var(--btn-nav_icon);
+      background-color: 
+        ${danger === true || variant === 'icon' || variant === 'navIcon'
+          ? 'transparent'
+          : variant === 'primary'
+          ? 'var(--btn-primary)'
+          : variant === 'dim'
+          ? 'var(--btn-dim)'
+          : 'transparent'
+        };
+      border: 
+        ${variant === 'icon' 
+          ? 'none'
+          : danger === true
+          ? '1px solid var(--btn-danger)'
+          : 'none'
+        };
+      color: 
+        ${danger === true 
+          ? 'var(--btn-danger)'
+          : disabled === true
+          ? 'var(--btn-disabled)'
+          : variant === 'primary'
+          ? 'var(--btn-primary-text)'
+          : variant === 'icon' && active === true 
+          ? 'var(--btn-icon-active)' 
+          : variant === 'icon' 
+          ? 'var(--btn-icon)'
+          : variant === 'navIcon' && active === true
+          ? 'var(--btn-primary)'
+          : 'var(--btn-nav_icon)'
+        };
+      font-size: 
+        ${size === 'small'
+          ? '0.8rem'
+          : size === 'middle'
+          ? '1.5rem'
+          : '2rem'
+        };
     `
   }
 `
 
 function Button(
   {
-    text="Boop", 
+    text='boop', 
     variant='icon', 
     icon=faCoffee,
-    danger=false, 
+    danger=true, 
     disabled=false,
-    ghost=false, 
-    size='middle',
+    size='small',
     active=true,
     onClick
   }: ButtonProps) {
@@ -70,12 +100,17 @@ function Button(
     <>
       <Wrapper>
         <GlobalStyle />
-        {icon && <StyledIcon icon={icon} active={active}></StyledIcon>}
+        {icon && <StyledIcon 
+          icon={icon} 
+          active={active}
+          danger={danger}
+          size={size}
+          />
+        }
         <StyledButton
           variant={variant}
           danger={danger}
           disabled={disabled}
-          ghost={ghost}
           active={active}
           size={size}
         >
