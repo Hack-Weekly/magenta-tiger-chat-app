@@ -1,1 +1,1 @@
-export * from "./dummy-type";
+export * from './props'

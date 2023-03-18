@@ -1,32 +1,35 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const User = require("./models/user.model");
+const UserModel = require("./models/user.model");
 const jwt = require("jsonwebtoken");
 
 app.use(cors());
 app.use(express.json());
 
 mongoose.connect(
+  "mongodb+srv://Vlady:3ivXdbJNosgT7Uju@chat-app.pvhv0vs.mongodb.net/?retryWrites=true&w=majority"
 );
 
 // Create User
 app.post("/api/register", async (req, res) => {
   try {
-    const user = await User.create({
+    const user = await UserModel.create({
       username: req.body.username,
       password: req.body.password,
     });
-    res.json({ status: 200 });
+    res.json({ status: 200, response: res.body });
   } catch (error) {
     res.json({ status: "error" });
   }
 });
 
 // Login
-app.post("/login", async (req, res) => {
-  const user = await User.findOne({
+app.post("/api/login", async (req, res) => {
+  const user = await UserModel.findOne({
     username: req.body.username,
     password: req.body.password,
   });
