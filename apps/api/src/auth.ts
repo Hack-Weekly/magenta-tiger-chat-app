@@ -10,9 +10,7 @@ const jwt = require("jsonwebtoken");
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(
-  "mongodb+srv://Vlady:3ivXdbJNosgT7Uju@chat-app.pvhv0vs.mongodb.net/?retryWrites=true&w=majority"
-);
+mongoose.connect(process.env.MONGODB_CONNECTION);
 
 // Create User
 app.post("/api/register", async (req, res) => {
@@ -23,7 +21,7 @@ app.post("/api/register", async (req, res) => {
     });
     res.json({ status: 200, response: res.body });
   } catch (error) {
-    res.json({ status: "error" });
+    res.json({ status: 401 });
   }
 });
 
