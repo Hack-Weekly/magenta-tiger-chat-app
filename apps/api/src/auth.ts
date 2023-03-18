@@ -9,11 +9,10 @@ app.use(cors());
 app.use(express.json());
 
 mongoose.connect(
-  "mongodb+srv://Vlady:3ivXdbJNosgT7Uju@chat-app.pvhv0vs.mongodb.net/chat-app-auth"
 );
 
 // Create User
-app.post("/register", async (req, res) => {
+app.post("/api/register", async (req, res) => {
   try {
     const user = await User.create({
       username: req.body.username,
@@ -47,44 +46,44 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Get users data
-// /quote is just a filler, maybe '/' would work better
-app.get("/quote", async (req, res) => {
-  const token = req.headers["x-access-token"];
+// // Get users data
+// // /quote is just a filler, maybe '/' would work better
+// app.get("/quote", async (req, res) => {
+//   const token = req.headers["x-access-token"];
 
-  try {
-    const decoded = jwt.verify(token, "secret123");
-    const username = decoded.username;
-    const user = await User.findOne({ username });
+//   try {
+//     const decoded = jwt.verify(token, "secret123");
+//     const username = decoded.username;
+//     const user = await User.findOne({ username });
 
-    // Could be everything the user has
-    return { status: 200, quote: user.quote };
-  } catch {
-    console.log("error");
-    req.json({ status: "error", error: "invalid token" });
-  }
-});
+//     // Could be everything the user has
+//     return { status: 200, quote: user.quote };
+//   } catch {
+//     console.log("error");
+//     req.json({ status: "error", error: "invalid token" });
+//   }
+// });
 
-// POST users data
-// /quote is just a filler, maybe '/' would work better
-app.get("/quote", async (req, res) => {
-  const token = req.headers["x-access-token"];
+// // POST users data
+// // /quote is just a filler, maybe '/' would work better
+// app.get("/quote", async (req, res) => {
+//   const token = req.headers["x-access-token"];
 
-  try {
-    const decoded = jwt.verify(token, "secret123");
-    const username = decoded.username;
-    const user = await User.updateOne(
-      { username },
-      { $set: { quote: req.body.quote } }
-    );
+//   try {
+//     const decoded = jwt.verify(token, "secret123");
+//     const username = decoded.username;
+//     const user = await User.updateOne(
+//       { username },
+//       { $set: { quote: req.body.quote } }
+//     );
 
-    // Could be everything the user has
-    return res.json({ status: 200, quote: user.quote });
-  } catch {
-    console.log("error");
-    req.json({ status: "error", error: "invalid token" });
-  }
-});
+//     // Could be everything the user has
+//     return res.json({ status: 200, quote: user.quote });
+//   } catch {
+//     console.log("error");
+//     req.json({ status: "error", error: "invalid token" });
+//   }
+// });
 
 app.listen(1337, () => {
   console.log("Server is running on Port 1337");
