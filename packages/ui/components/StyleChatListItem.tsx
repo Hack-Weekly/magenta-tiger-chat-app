@@ -1,14 +1,7 @@
 import styled from 'styled-components';
+import { getFirstLetter } from 'ui/utils/getFirstLetter';
 
-interface ListProps {
-  type: 'chat' | 'invite' | 'edit';
-  imageUrl: string | null;
-  title: string;
-  description: string;
-  timestamp: number;
-  isNotified: boolean;
-  onClick: (event: React.MouseEvent<HTMLLIElement>) => void;
-}
+import { StyleChatListItemProps } from '../../types/props/chat-list-item-props.types';
 
 const cutDescription = (text: string) => {
   // Add '...' when we have description longer than 35 char. (Only on type CHAT or EDIT)
@@ -21,19 +14,6 @@ const formatTime = (timestamp: number): string => {
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
   return `${hours}:${minutes}`;
-};
-
-const getFirstLetter = (name: string): string => {
-  // When user image is set to NULL we use first letter as placeholder for image (Like in Google)
-  let index = 0;
-  while (index < name.length) {
-    const letter = name.charAt(index);
-    if (letter.match(/[a-zA-Z0-9]/)) {
-      return letter.toUpperCase();
-    }
-    index++;
-  }
-  return 'G';
 };
 
 const StyledList = styled.li`
@@ -134,17 +114,17 @@ const StyledDate = styled.p`
   margin-top: 0;
 `;
 
-export const List = ({
-  type,
+export const StyleChatListItem = ({
+  variant,
   imageUrl,
   onClick,
   title,
   description,
   timestamp,
   isNotified,
-}: ListProps) => (
+}: StyleChatListItemProps) => (
   <StyledList onClick={onClick}>
-    {type === 'edit' && (
+    {variant === 'edit' && (
       <StyledEditWrapper>{/* !DELETE chat btn component*/}</StyledEditWrapper>
     )}
     <StyledImageWrapper>
@@ -158,14 +138,14 @@ export const List = ({
     <StyledInfoWrapper>
       <StyledTitle>{title}</StyledTitle>
       <StyledDescription>
-        {type === 'invite'
+        {variant === 'invite'
           ? 'You have been invited to this group'
           : description.length !== 0
           ? cutDescription(description)
           : 'No messages yet'}
       </StyledDescription>
     </StyledInfoWrapper>
-    {type === 'invite' && (
+    {variant === 'invite' && (
       <StyledEditWrapper>
         {/* !ADD  DECLINE chat btn component*/}
       </StyledEditWrapper>
@@ -174,8 +154,8 @@ export const List = ({
   </StyledList>
 );
 
-List.defaultProps = {
-  type: 'chat',
+StyleChatListItem.defaultProps = {
+  variant: 'chat',
   onClick: undefined,
   imageUrl: null,
   title: null,
