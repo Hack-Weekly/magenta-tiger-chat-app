@@ -1,23 +1,21 @@
+import dynamic from "next/dynamic";
+import Chat from "../components/Chat";
 import Register from "../components/Registration";
-import { AuthProvider } from "../context";
 import { useAuth } from "../context/AuthContext";
 
 export default function Web() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
+
+  const DynamicLayout = dynamic(() => import("../components/Layout"), {
+    ssr: false,
+  });
 
   return (
-    <section>
-      <AuthProvider>
+    <DynamicLayout>
+      <section>
         <h1>Chat App</h1>
-        {user ? (
-          <div>
-            <h2>Your Profile</h2>
-            <button onClick={logout}>Logout</button>
-          </div>
-        ) : (
-          <Register />
-        )}
-      </AuthProvider>
-    </section>
+        {user ? <Chat /> : <Register />}
+      </section>
+    </DynamicLayout>
   );
 }

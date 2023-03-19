@@ -25,8 +25,7 @@ export default function Registration() {
       body: JSON.stringify(user),
     })
       .then((res) => res.json())
-      .then((data) => login(data))
-      .then((data) => console.log(data))
+      .then((data) => login(data.user))
       .catch((err) => console.log(err));
 
     // Reset form fields

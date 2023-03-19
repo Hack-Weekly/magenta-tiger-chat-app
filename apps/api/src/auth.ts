@@ -13,15 +13,15 @@ app.use(express.json());
 mongoose.connect(process.env.MONGODB_CONNECTION);
 
 // Create User
-app.post("/api/register", async (req, res) => {
+app.post("/api/register", async (req, res, next) => {
   try {
     const user = await UserModel.create({
       username: req.body.username,
       password: req.body.password,
     });
-    res.json({ status: 200, response: res.body });
+    res.status(200).json({ user: user });
   } catch (error) {
-    res.json({ status: 401 });
+    next(error);
   }
 });
 
