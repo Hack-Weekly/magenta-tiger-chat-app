@@ -10,6 +10,7 @@ This turborepo uses [npm](https://www.npmjs.com/) as a package manager. It inclu
 
 - `docs`: a [Next.js](https://nextjs.org/) app
 - `web`: another [Next.js](https://nextjs.org/) app
+- `api`: backend Node.js connected with MongoDB app
 - `ui`: a stub React component library shared by both `web` and `docs` applications
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
@@ -39,7 +40,8 @@ To develop all apps and packages, run the following command:
 
 ```
 cd my-turborepo
-npm run dev
+web: npm run dev
+api: npm run api
 ```
 
 ### Remote Caching
