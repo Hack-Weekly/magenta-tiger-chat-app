@@ -1,10 +1,12 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const { login } = useAuth();
 
   function handleLogin(e: any) {
     e.preventDefault();
@@ -22,6 +24,7 @@ export default function Login() {
       body: JSON.stringify(user),
     })
       .then((res) => res.json())
+      .then((data) => login(data))
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
 
