@@ -1,10 +1,15 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
-export default function Login() {
+export default function Registration() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
 
-  function handleLogin(e: any) {
+  const router = useRouter();
+
+  function handleSubmit(e: any) {
     e.preventDefault();
 
     const user = {
@@ -12,7 +17,7 @@ export default function Login() {
       password: password,
     };
 
-    fetch("http://localhost:1337/api/login", {
+    fetch("http://localhost:1337/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,18 +25,20 @@ export default function Login() {
       body: JSON.stringify(user),
     })
       .then((res) => res.json())
+      .then((data) => login(data))
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
 
     // Reset form fields
     setUsername("");
     setPassword("");
+    router.push("/");
   }
 
   return (
-    <section>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+    <div>
+      <h2>Create User</h2>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>Username:</label>
           <input
@@ -48,8 +55,8 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
-    </section>
+    </div>
   );
 }

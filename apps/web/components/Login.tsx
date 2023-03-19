@@ -1,10 +1,12 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 
-function Login() {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  function handleSubmit(e: any) {
+  function handleLogin(e: any) {
     e.preventDefault();
 
     const user = {
@@ -12,7 +14,7 @@ function Login() {
       password: password,
     };
 
-    fetch("http://localhost:1337/api/register", {
+    fetch("http://localhost:1337/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,12 +28,13 @@ function Login() {
     // Reset form fields
     setUsername("");
     setPassword("");
+    router.push("/");
   }
 
   return (
-    <div>
-      <h2>Create User</h2>
-      <form onSubmit={handleSubmit}>
+    <section>
+      <h2>Login</h2>
+      <form onSubmit={handleLogin}>
         <div>
           <label>Username:</label>
           <input
@@ -48,10 +51,8 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
       </form>
-    </div>
+    </section>
   );
 }
-
-export default Login;
