@@ -43,48 +43,9 @@ app.post("/api/login", async (req, res) => {
 
     return res.json({ status: 200, user: token });
   } else {
-    res.json({ status: "not found", user: false });
+    res.json({ status: 401, user: false });
   }
 });
-
-// // Get users data
-// // /quote is just a filler, maybe '/' would work better
-// app.get("/quote", async (req, res) => {
-//   const token = req.headers["x-access-token"];
-
-//   try {
-//     const decoded = jwt.verify(token, "secret123");
-//     const username = decoded.username;
-//     const user = await User.findOne({ username });
-
-//     // Could be everything the user has
-//     return { status: 200, quote: user.quote };
-//   } catch {
-//     console.log("error");
-//     req.json({ status: "error", error: "invalid token" });
-//   }
-// });
-
-// // POST users data
-// // /quote is just a filler, maybe '/' would work better
-// app.get("/quote", async (req, res) => {
-//   const token = req.headers["x-access-token"];
-
-//   try {
-//     const decoded = jwt.verify(token, "secret123");
-//     const username = decoded.username;
-//     const user = await User.updateOne(
-//       { username },
-//       { $set: { quote: req.body.quote } }
-//     );
-
-//     // Could be everything the user has
-//     return res.json({ status: 200, quote: user.quote });
-//   } catch {
-//     console.log("error");
-//     req.json({ status: "error", error: "invalid token" });
-//   }
-// });
 
 app.listen(1337, () => {
   console.log("Server is running on Port 1337");
