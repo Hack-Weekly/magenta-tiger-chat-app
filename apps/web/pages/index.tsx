@@ -1,3 +1,4 @@
+import React from "react"
 import { Button, Input } from "ui/components"
 
 export default function Web() {
@@ -5,7 +6,7 @@ export default function Web() {
         <div>
             <h1>Web</h1>
             <Button />
-            <Input typeOfInput={"email"} border={true} width={"15rem"} />
+            <Input typeOfInput={"send"} border={true} width={"15rem"} />
         </div>
     )
 }

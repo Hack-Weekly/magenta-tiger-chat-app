@@ -1,1 +1,1 @@
-export const TYPES_IN_HERE_PLEASE = "foo";
+export const TYPES_IN_HERE_PLEASE = "foo"

@@ -1,40 +1,23 @@
 import styled from "styled-components"
-import { useState } from "react"
 import GlobalStyle from "./globalStyle/GlobalStyling"
-import SearchIcon from "@mui/icons-material/Search"
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined"
-import SendIcon from "@mui/icons-material/Send"
-import PasswordIcon from "@mui/icons-material/Password"
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
+import {
+    faCircleUser,
+    faPaperPlane,
+    faPenToSquare,
+} from "@fortawesome/free-regular-svg-icons"
+import { faMagnifyingGlass, faKey } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { InputProps } from "../../types/src/props/input-props.types"
 
-// NOTES//
-// callback not fully working yet, but styles do work//
-
-interface InputProps {
-    typeOfInput: "search" | "edit" | "send" | "email" | "password"
-    border: true | false
-    width: "100%" | "20rem" | "15rem" | "10rem"
-    callBack: any | null
-}
-interface ValidProps {
-    validEmail: boolean | null
-    validPassword: boolean | null
-}
-
-const Wrapper = styled.div<InputProps & ValidProps>`
+const StyledWrapper = styled.div<InputProps>`
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 0.3rem;
+
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 
-    background-color: ${props =>
-        props.validEmail === false || props.validPassword === false
-            ? "rgba(255, 0, 0, 0.2)"
-            : props.validEmail === true || props.validPassword === true
-            ? "rgba(0, 255, 0, 0.2)"
-            : "#e8e7e7"};
+    background-color: "#e8e7e7";
     border: ${props => (props.border ? "1px solid grey" : "none")};
     border-radius: 4px;
     width: ${props =>
@@ -48,29 +31,24 @@ const Wrapper = styled.div<InputProps & ValidProps>`
     padding: 0.1rem;
 
     &:hover {
-        background-color: ${props =>
-            props.validEmail === false || props.validPassword === false
-                ? "rgba(255, 0, 0, 0.2)"
-                : props.validEmail === true || props.validPassword === true
-                ? "rgba(0, 255, 0, 0.2)"
-                : "#e8e7e7da"};
+        background-color: "#e8e7e7da";
     }
     &:focus-within {
-        background-color: ${props =>
-            props.validEmail === false || props.validPassword === false
-                ? "rgba(255, 0, 0, 0.2)"
-                : props.validEmail === true || props.validPassword === true
-                ? "rgba(0, 255, 0, 0.2)"
-                : "#e8e7e7da"};
+        background-color: "#e8e7e7da";
 
-        box-shadow: 0 0 4px #e8e7e7;
+        box-shadow: 0 0 4px #c1c1c1;
     }
 `
-const Icon = styled.div`
-    width: 100%;
+
+const StyledDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.2rem;
+    margin-right: 0.4rem;
 `
 
-const UserInput = styled.input<InputProps>`
+const StyledInput = styled.input<InputProps>`
     background-color: ${props =>
         props.typeOfInput === "search"
             ? "white"
@@ -107,9 +85,16 @@ const UserInput = styled.input<InputProps>`
     }
 `
 
-function Input({ typeOfInput, border, width, callBack }: InputProps) {
-    const [validPassword, setValidPassword] = useState<null | Boolean>(null)
-    const [validEmail, setValidEmail] = useState<null | Boolean>(null)
+function Input({ typeOfInput, border, width, onClick }: InputProps) {
+    const profileIcon = (
+        <FontAwesomeIcon icon={faCircleUser} color={"#535353"} />
+    )
+    const sendIcon = <FontAwesomeIcon icon={faPaperPlane} color={"#535353"} />
+    const penIcon = <FontAwesomeIcon icon={faPenToSquare} color={"#535353"} />
+    const searchIcon = (
+        <FontAwesomeIcon icon={faMagnifyingGlass} color={"#535353"} />
+    )
+    const keyIcon = <FontAwesomeIcon icon={faKey} />
     const dynamicType: string = setInputType()
 
     function setInputType() {
@@ -123,77 +108,39 @@ function Input({ typeOfInput, border, width, callBack }: InputProps) {
         return "password"
     }
 
-    function validatePassword(password: string) {
-        console.log(password)
-        const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/
-        setValidPassword(passwordRegex.test(password))
-    }
-
-    function validateEmail(email: string) {
-        const emailRegex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
-        setValidEmail(emailRegex.test(email))
-    }
-
-    function buttonWrapper(funcCall: (value: any) => any | null) {
-        return (
-            <>
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                    onClick={() => {
-                        return funcCall
-                    }}
-                >
-                    {typeOfInput === "search" ? (
-                        <SearchIcon fontSize="medium" color="action" />
-                    ) : typeOfInput === "email" ? (
-                        <AccountCircleOutlinedIcon
-                            fontSize="medium"
-                            color="action"
-                        />
-                    ) : typeOfInput === "edit" ? (
-                        <EditOutlinedIcon fontSize="medium" color="action" />
-                    ) : typeOfInput === "password" ? (
-                        <PasswordIcon fontSize="medium" color="action" />
-                    ) : (
-                        <SendIcon fontSize="small" color="action" />
-                    )}
-                </div>
-            </>
-        )
-    }
-
     return (
         <>
             <GlobalStyle />
-            <Wrapper
+            <StyledWrapper
                 width={width}
                 border={border}
                 typeOfInput={typeOfInput}
-                validEmail={validEmail}
-                validPassword={validPassword}
             >
-                {typeOfInput !== "send" ? buttonWrapper(callBack) : ""}
+                {typeOfInput === "search" ? (
+                    <StyledDiv onClick={onClick}>{searchIcon}</StyledDiv>
+                ) : typeOfInput === "email" ? (
+                    <StyledDiv>{profileIcon}</StyledDiv>
+                ) : typeOfInput === "edit" ? (
+                    <StyledDiv>{penIcon}</StyledDiv>
+                ) : typeOfInput === "password" ? (
+                    <StyledDiv>{keyIcon}</StyledDiv>
+                ) : (
+                    ""
+                )}
 
-                <UserInput
+                <StyledInput
                     type={dynamicType}
                     typeOfInput={typeOfInput}
                     width={width}
                     border={border}
-                    callBack={callBack}
-                    onChange={e => {
-                        dynamicType === "email"
-                            ? validateEmail(e.target.value)
-                            : dynamicType === "password"
-                            ? validatePassword(e.target.value)
-                            : ""
-                    }}
                 />
-                {typeOfInput === "send" ? buttonWrapper(callBack()) : ""}
-            </Wrapper>
+
+                {typeOfInput === "send" ? (
+                    <StyledDiv>{sendIcon}</StyledDiv>
+                ) : (
+                    ""
+                )}
+            </StyledWrapper>
         </>
     )
 }
@@ -202,6 +149,6 @@ Input.defaultProps = {
     typeOfInput: "search",
     border: false,
     width: "15rem",
-    callBack: null,
+    onClick: undefined,
 }
 export { Input }
