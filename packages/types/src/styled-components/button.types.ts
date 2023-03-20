@@ -21,9 +21,3 @@ export type StyledButtonProps = {
   active?: boolean;
   size?: Size;
 };
-
-export type StyledIconProps = {
-  active: boolean;
-  danger: boolean;
-  size: Size;
-};

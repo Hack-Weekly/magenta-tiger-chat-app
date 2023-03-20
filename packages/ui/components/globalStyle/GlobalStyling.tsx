@@ -10,6 +10,8 @@ const GlobalStyle = createGlobalStyle`
     --btn-icon: #999999;
     --btn-icon-active: #2C2C2C;
     --btn-nav_icon: #252525;
+    --btn-disabled: #e0e0e0;
+    --btn-disabled-text: #575757;
   }
 
   body {
