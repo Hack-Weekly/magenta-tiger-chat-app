@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons"
 import { faMagnifyingGlass, faKey } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { InputProps } from "../../types/src/props/input-props.types"
+import { DivProps, InputProps } from "../../types/src/props/input-props.types"
 
 const StyledWrapper = styled.div<InputProps>`
     display: flex;
@@ -40,7 +40,7 @@ const StyledWrapper = styled.div<InputProps>`
     }
 `
 
-const StyledDiv = styled.div`
+const StyledDiv = styled.div<DivProps>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,7 +85,10 @@ const StyledInput = styled.input<InputProps>`
     }
 `
 
-function Input({ typeOfInput, border, width, onClick }: InputProps) {
+function Input(
+    { typeOfInput, border, width }: InputProps,
+    { onClick }: DivProps
+) {
     const profileIcon = (
         <FontAwesomeIcon icon={faCircleUser} color={"#535353"} />
     )
@@ -119,11 +122,11 @@ function Input({ typeOfInput, border, width, onClick }: InputProps) {
                 {typeOfInput === "search" ? (
                     <StyledDiv onClick={onClick}>{searchIcon}</StyledDiv>
                 ) : typeOfInput === "email" ? (
-                    <StyledDiv>{profileIcon}</StyledDiv>
+                    <StyledDiv onClick={onClick}>{profileIcon}</StyledDiv>
                 ) : typeOfInput === "edit" ? (
-                    <StyledDiv>{penIcon}</StyledDiv>
+                    <StyledDiv onClick={onClick}>{penIcon}</StyledDiv>
                 ) : typeOfInput === "password" ? (
-                    <StyledDiv>{keyIcon}</StyledDiv>
+                    <StyledDiv onClick={onClick}>{keyIcon}</StyledDiv>
                 ) : (
                     ""
                 )}
@@ -136,7 +139,7 @@ function Input({ typeOfInput, border, width, onClick }: InputProps) {
                 />
 
                 {typeOfInput === "send" ? (
-                    <StyledDiv>{sendIcon}</StyledDiv>
+                    <StyledDiv onClick={onClick}>{sendIcon}</StyledDiv>
                 ) : (
                     ""
                 )}
