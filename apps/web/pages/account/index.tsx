@@ -1,13 +1,13 @@
-import Head from 'next/head';
+import Head from "next/head";
 
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
-import styled from 'styled-components';
-import { useAuth } from '../../context/AuthContext';
-import { Button, Header } from 'ui';
+import styled from "styled-components";
+import { Button, Header } from "ui";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Web() {
-  const DynamicLayout = dynamic(() => import('../../components/Layout'), {
+  const DynamicLayout = dynamic(() => import("../../components/Layout"), {
     ssr: false,
   });
 
@@ -28,12 +28,7 @@ export default function Web() {
       <DynamicLayout>
         <AccountPageWrapper>
           <Header title="Account" />
-          <Button
-            onClick={logout}
-            text="Log out"
-            size="small"
-            variant="primary"
-          />
+          <Button onClick={logout} text="Log out" size="small" />
         </AccountPageWrapper>
       </DynamicLayout>
     </>
