@@ -1,12 +1,21 @@
-import React from "react"
-import { Button, Input } from "ui/components"
+import dynamic from "next/dynamic";
+import Chat from "../components/Chat";
+import Register from "../components/Registration";
+import { useAuth } from "../context/AuthContext";
 
 export default function Web() {
-    return (
-        <div>
-            <h1>Web</h1>
-            <Button />
-            <Input typeOfInput={"send"} border={true} width={"15rem"} />
-        </div>
-    )
+  const { user } = useAuth();
+
+  const DynamicLayout = dynamic(() => import("../components/Layout"), {
+    ssr: false,
+  });
+
+  return (
+    <DynamicLayout>
+      <section>
+        <h1>Chat App</h1>
+        {user ? <Chat /> : <Register />}
+      </section>
+    </DynamicLayout>
+  );
 }

@@ -1,34 +1,43 @@
 {
-    "name": "magenta-tiger-chat-app",
-    "version": "0.0.0",
-    "private": true,
-    "workspaces": [
-        "apps/*",
-        "packages/*"
-    ],
-    "scripts": {
-        "build": "turbo run build",
-        "dev": "turbo run dev",
-        "lint": "turbo run lint",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\""
-    },
-    "devDependencies": {
-        "@types/styled-components": "^5.1.26",
-        "eslint-config-custom": "*",
-        "prettier": "latest",
-        "turbo": "latest"
-    },
-    "engines": {
-        "node": ">=14.0.0"
-    },
-    "dependencies": {
-        "@emotion/react": "^11.10.6",
-        "@emotion/styled": "^11.10.6",
-        "@fortawesome/free-regular-svg-icons": "^6.3.0",
-        "@fortawesome/free-solid-svg-icons": "^6.3.0",
-        "@fortawesome/react-fontawesome": "^0.2.0",
-        "@types/react-fontawesome": "^1.6.5",
-        "styled-components": "^5.3.9"
-    },
-    "packageManager": "npm@9.3.1"
+  "name": "magenta-tiger-chat-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "dotenv turbo run dev",
+    "api": "nodemon --esm apps/api/src/auth.ts dotenv",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.26",
+    "eslint-config-custom": "*",
+    "prettier": "latest",
+    "turbo": "latest"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@fortawesome/free-regular-svg-icons": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@types/react-fontawesome": "^1.6.5",
+    "@types/node": "^18.15.3",
+    "dotenv": "^16.0.3",
+    "dotenv-cli": "^7.1.0",
+    "nodemon": "^2.0.21",
+    "styled-components": "^5.3.9"
+  },
+  "packageManager": "npm@9.3.1"
 }

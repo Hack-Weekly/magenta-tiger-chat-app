@@ -1,7 +1,11 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": ["**/.env.*local", ".env"],
   "pipeline": {
+    "dev:api": {
+      "outputs": ["dist/**", ".next/**"],
+      "env": ["MONGODB_CONNECTION"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
