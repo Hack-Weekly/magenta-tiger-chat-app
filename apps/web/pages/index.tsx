@@ -1,18 +1,21 @@
-import { Button, Input, StyleChatListItem, StyledHeader } from 'ui/components';
+import dynamic from "next/dynamic";
+import Chat from "../components/Chat";
+import Register from "../components/Registration";
+import { useAuth } from "../context/AuthContext";
 
 export default function Web() {
+  const { user } = useAuth();
+
+  const DynamicLayout = dynamic(() => import("../components/Layout"), {
+    ssr: false,
+  });
+
   return (
-    <div>
-      <h1>Web</h1>
-      <StyledHeader title="Test" userName="Magenta" imageUrl={null} />
-      <Button />
-      <Input type={'search'} />
-      <StyleChatListItem
-        variant="chat"
-        title="#magenta-tiger-chat"
-        description=""
-        imageUrl={null}
-      />
-    </div>
+    <DynamicLayout>
+      <section>
+        <h1>Chat App</h1>
+        {user ? <Chat /> : <Register />}
+      </section>
+    </DynamicLayout>
   );
 }

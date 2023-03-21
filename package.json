@@ -2,13 +2,15 @@
   "name": "magenta-tiger-chat-app",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "dotenv turbo run dev",
+    "api": "nodemon --esm apps/api/src/auth.ts dotenv",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
@@ -24,9 +26,16 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.13",
     "@mui/styled-engine-sc": "^5.11.11",
+    "@types/node": "^18.15.3",
+    "dotenv": "^16.0.3",
+    "dotenv-cli": "^7.1.0",
+    "nodemon": "^2.0.21",
     "styled-components": "^5.3.9"
   },
   "packageManager": "npm@9.3.1"
