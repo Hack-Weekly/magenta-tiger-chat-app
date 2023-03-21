@@ -1,9 +1,6 @@
 import styled from 'styled-components';
-import { getFirstLetter } from 'ui/utils/getFirstLetter';
 
-import Link from 'next/link';
-
-import { StyledHeaderProps } from '../../types/props/header-props.types';
+import { HeaderProps } from '../../types/src/styled-components/header-props.types';
 
 const StyledHeaderWrapper = styled.div`
   font-family: 'Poppins', sans-serif;
@@ -14,6 +11,8 @@ const StyledHeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+  padding: 0 0.5rem;
+  margin: 0;
 `;
 
 const StyledTitle = styled.h2`
@@ -32,34 +31,6 @@ const StyledDescription = styled.p`
   margin: 0;
 `;
 
-const StyledImage = styled.img`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: none;
-`;
-
-const StyledImageWrapper = styled.div`
-  margin-left: 0.2rem;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: none;
-  background-color: #dddddd;
-  cursor: pointer;
-  text-decoration: none;
-`;
-
-const StyledPlaceholder = styled.span`
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: #2c2c2c;
-`;
-
 const StyledInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -67,13 +38,13 @@ const StyledInfoWrapper = styled.div`
   justify-content: flex-start;
 `;
 
-export const StyledHeader = ({
+export const Header = ({
   variant,
   title,
   description,
   imageUrl,
   userName,
-}: StyledHeaderProps) => (
+}: HeaderProps) => (
   <StyledHeaderWrapper>
     <StyledInfoWrapper>
       <StyledTitle>
@@ -85,21 +56,10 @@ export const StyledHeader = ({
         <StyledDescription>{description}</StyledDescription>
       )}
     </StyledInfoWrapper>
-    {variant !== 'account' && (
-      <Link href={`/account`}>
-        <StyledImageWrapper title="My account">
-          {imageUrl ? (
-            <StyledImage src={imageUrl} alt="" />
-          ) : (
-            <StyledPlaceholder>{getFirstLetter(userName)}</StyledPlaceholder>
-          )}
-        </StyledImageWrapper>
-      </Link>
-    )}
   </StyledHeaderWrapper>
 );
 
-StyledHeader.defaultProps = {
+Header.defaultProps = {
   variant: 'default',
   title: '',
   description: '',

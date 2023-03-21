@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { getFirstLetter } from 'ui/utils/getFirstLetter';
 
-import { StyleChatListItemProps } from '../../types/props/chat-list-item-props.types';
+import { ChatPreviewProps } from '../../types/src/styled-components/chat-preview-props';
 
 const cutDescription = (text: string) => {
   // Add '...' when we have description longer than 35 char. (Only on type CHAT or EDIT)
@@ -16,7 +16,7 @@ const formatTime = (timestamp: number): string => {
   return `${hours}:${minutes}`;
 };
 
-const StyledList = styled.li`
+const StyledChatPreview = styled.li`
   max-width: 960px; // Remove later
   font-family: 'Poppins', sans-serif;
   font-style: normal;
@@ -122,8 +122,8 @@ export const StyleChatListItem = ({
   description,
   timestamp,
   isNotified,
-}: StyleChatListItemProps) => (
-  <StyledList onClick={onClick}>
+}: ChatPreviewProps) => (
+  <StyledChatPreview onClick={onClick}>
     {variant === 'edit' && (
       <StyledEditWrapper>{/* !DELETE chat btn component*/}</StyledEditWrapper>
     )}
@@ -151,7 +151,7 @@ export const StyleChatListItem = ({
       </StyledEditWrapper>
     )}
     <StyledDate>{formatTime(timestamp)}</StyledDate>
-  </StyledList>
+  </StyledChatPreview>
 );
 
 StyleChatListItem.defaultProps = {

@@ -1,5 +1,5 @@
 // globalStyles.js
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -8,13 +8,14 @@ const GlobalStyle = createGlobalStyle`
     --btn-dim: #E2FFF5;
     --btn-danger: #E42222;
     --btn-icon: #999999;
-    --btn-icon-active: #2C2C2C;
+    --btn-icon-active: #1F986C;
     --btn-nav_icon: #252525;
     --btn-disabled: #e0e0e0;
     --btn-disabled-text: #575757;
   }
 
-  body {
+  body, html {
+    overflow: hidden;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -22,6 +23,6 @@ const GlobalStyle = createGlobalStyle`
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
   }
-`
+`;
 
-export default GlobalStyle
+export default GlobalStyle;

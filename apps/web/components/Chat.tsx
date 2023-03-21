@@ -1,5 +1,5 @@
-import { Input } from "ui";
-import { useAuth } from "../context/AuthContext";
+import { Input } from 'ui';
+import { useAuth } from '../context/AuthContext';
 
 export default function Chat() {
   const { user, logout } = useAuth();

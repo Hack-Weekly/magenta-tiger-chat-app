@@ -33,6 +33,7 @@
     "@mui/material": "^5.11.13",
     "@mui/styled-engine-sc": "^5.11.11",
     "@types/node": "^18.15.3",
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "dotenv-cli": "^7.1.0",
     "nodemon": "^2.0.21",

@@ -1,4 +1,5 @@
 export * from './Button';
-export * from './StyleChatListItem';
+export * from './ChatPreview';
 export * from './Input';
-export * from './StyledHeader';
+export * from './Header';
+export * from './Nav';

@@ -1,4 +1,4 @@
-export interface StyleChatListItemProps {
+export type ChatPreviewProps = {
   variant: 'chat' | 'invite' | 'edit';
   imageUrl: string | null;
   title: string;
@@ -6,4 +6,4 @@ export interface StyleChatListItemProps {
   timestamp: number;
   isNotified: boolean;
   onClick: (event: React.MouseEvent<HTMLLIElement>) => void;
-}
+};
