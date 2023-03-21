@@ -37,6 +37,7 @@ export function AuthProvider({ children }: ChildrenProps) {
 
   const login = (user: User) => {
     setUser(user);
+    console.log(user);
     return user;
   };
 
