@@ -14,6 +14,7 @@ export default function Web() {
         <title>Search</title>
       </Head>
       <DynamicLayout>
+        {/* Put here already styled Search page component & remove Header! */}
         <Header title="Search" description="Search by username or email" />
       </DynamicLayout>
     </>

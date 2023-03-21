@@ -21,6 +21,7 @@ export default function Web() {
         <title>Log in</title>
       </Head>
       <LoginPageWrapper>
+        {/* Put here already styled Login page component!*/}
         <Login />
       </LoginPageWrapper>
     </>

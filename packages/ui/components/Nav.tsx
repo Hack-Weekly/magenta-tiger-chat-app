@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Link from 'next/link';
 import { NavPages } from '../../types/src/styled-components/nav.types';
 import { faHouse, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
@@ -41,9 +40,9 @@ const Navbar = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (path == 'search') {
+    if (path == '/search') {
       setActivePage('search');
-    } else if (path == 'account') {
+    } else if (path == '/account') {
       setActivePage('account');
     } else {
       setActivePage('home');

@@ -1,9 +1,8 @@
 import dynamic from 'next/dynamic';
-import Chat from '../components/Chat';
-import Register from '../components/Registration';
 import { useAuth } from '../context/AuthContext';
-import { Header } from 'ui';
+import { Button, Header } from 'ui';
 import Head from 'next/head';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
 
 export default function Web() {
   const { user } = useAuth();
@@ -17,6 +16,7 @@ export default function Web() {
       <Head>
         <title>Home</title>
       </Head>
+      {/* Put here already styled Home page component & remove Header! */}
       <Header variant="welcome" userName={user ? user?.username : 'Guest'} />
     </DynamicLayout>
   );
