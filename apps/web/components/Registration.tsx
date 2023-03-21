@@ -14,7 +14,7 @@ export default function Registration() {
     e.preventDefault();
 
     const user = {
-      name: username,
+      username: username,
       email: email,
       password: password,
     };

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
   const { login } = useAuth();
@@ -12,11 +12,11 @@ export default function Login() {
     e.preventDefault();
 
     const user = {
-      username: username,
+      email: email,
       password: password,
     };
 
-    fetch("http://localhost:1337/api/login", {
+    fetch("http://localhost:8089/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,11 +24,11 @@ export default function Login() {
       body: JSON.stringify(user),
     })
       .then((res) => res.json())
-      .then((data) => login(data))
+      .then((data) => login(data.user))
       .catch((err) => console.log(err));
 
     // Reset form fields
-    setUsername("");
+    setEmail("");
     setPassword("");
     router.push("/");
   }
@@ -38,11 +38,11 @@ export default function Login() {
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
-          <label>Username:</label>
+          <label>Email:</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
