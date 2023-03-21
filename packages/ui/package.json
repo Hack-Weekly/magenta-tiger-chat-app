@@ -5,7 +5,11 @@
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"**/*.ts*\""
+    "lint": "eslint \"**/*.ts*\"",
+    "build": "turbo run build"
+  },
+  "dependencies": {
+    "types": "*"
   },
   "devDependencies": {
     "@types/react": "^18.0.22",

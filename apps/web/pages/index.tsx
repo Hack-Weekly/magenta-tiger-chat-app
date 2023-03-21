@@ -1,12 +1,21 @@
-import { faMobileAlt } from "@fortawesome/free-solid-svg-icons";
-import { Button, Input } from "ui/components";
+import dynamic from "next/dynamic";
+import Chat from "../components/Chat";
+import Register from "../components/Registration";
+import { useAuth } from "../context/AuthContext";
 
 export default function Web() {
+  const { user } = useAuth();
+
+  const DynamicLayout = dynamic(() => import("../components/Layout"), {
+    ssr: false,
+  });
+
   return (
-    <div>
-      <h1>Web</h1>
-      <Button size="large" text="Buttontext" icon={faMobileAlt} onClick={(e) => console.log(e)}/>
-      <Input type={"search"} />
-    </div>
+    <DynamicLayout>
+      <section>
+        <h1>Chat App</h1>
+        {user ? <Chat /> : <Register />}
+      </section>
+    </DynamicLayout>
   );
 }
