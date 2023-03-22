@@ -15,17 +15,16 @@ const penIcon = <FontAwesomeIcon icon={faPenToSquare} color={"#535353"} />
 const searchIcon = (
     <FontAwesomeIcon icon={faMagnifyingGlass} color={"#535353"} />
 )
-const keyIcon = <FontAwesomeIcon icon={faKey} />
+const keyIcon = <FontAwesomeIcon icon={faKey} color={"#535353"} />
 
 const StyledWrapper = styled.div<InputProps>`
+    background-color: #e8e7e7;
+
     display: flex;
     align-items: center;
     justify-content: flex-start;
-
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-
-    background-color: "#e8e7e7";
     border: ${props => (props.border ? "1px solid grey" : "none")};
     border-radius: 4px;
     width: ${props =>
@@ -43,33 +42,14 @@ const StyledWrapper = styled.div<InputProps>`
     }
 
     &:focus-within {
-        background-color: "#e8e7e7da";
+        background-color: #f4f1f1da;
 
         box-shadow: 0 0 4px #c1c1c1;
     }
     &:active {
-        background-color: "#e8e7e7da";
+        background-color: #f4f1f1da;
 
         box-shadow: 0 0 4px #c1c1c1;
-    }
-    &::before {
-        content: ${props =>
-            props.typeOfInput === "search"
-                ? `"\\F002"`
-                : props.typeOfInput === "email"
-                ? `"\\F2BD"`
-                : props.typeOfInput === "edit"
-                ? `"\\F2BD"`
-                : props.typeOfInput === "password"
-                ? `"\\F084"`
-                : "none"};
-        display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
     }
 `
 
@@ -79,21 +59,12 @@ const StyledBtn = styled.button<BtnProps>`
     justify-content: center;
     background: none;
     border: none;
-    margin-left: 0.2rem;
-    margin-right: 0.4rem;
+    margin-left: 0rem;
+    margin-right: 0.2rem;
 `
 
 const StyledInput = styled.input<InputProps>`
-    background-color: ${props =>
-        props.typeOfInput === "search"
-            ? "white"
-            : props.typeOfInput === "edit"
-            ? "green"
-            : props.typeOfInput === "send"
-            ? "blue"
-            : props.typeOfInput === "email"
-            ? "white"
-            : "white"};
+    background: none;
     height: 100%;
     width: 100%;
     border: none;
@@ -145,6 +116,17 @@ function Input(
                 border={border}
                 typeOfInput={typeOfInput}
             >
+                {typeOfInput === "search" ? (
+                    <StyledBtn onClick={onClick}>{searchIcon}</StyledBtn>
+                ) : typeOfInput === "edit" ? (
+                    <StyledBtn onClick={onClick}>{penIcon}</StyledBtn>
+                ) : typeOfInput === "email" ? (
+                    <StyledBtn onClick={onClick}>{profileIcon}</StyledBtn>
+                ) : typeOfInput === "password" ? (
+                    <StyledBtn onClick={onClick}>{keyIcon}</StyledBtn>
+                ) : (
+                    ""
+                )}
                 <StyledInput
                     type={dynamicType}
                     typeOfInput={typeOfInput}
