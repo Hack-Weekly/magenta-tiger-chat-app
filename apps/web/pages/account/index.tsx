@@ -1,26 +1,76 @@
-import Head from 'next/head';
+import Head from "next/head"
 
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic"
 
-import styled from 'styled-components';
-import { Button, Header } from 'ui';
-import { useAuth } from '../../context/AuthContext';
+import styled from "styled-components"
+import { Button, Header } from "ui"
+import { useAuth } from "../../context/AuthContext"
+
+const StyledTitle = styled.h3`
+    margin: 0;
+    margin-left: 0.5rem;
+`
+const StyledMainWrapper = styled.div`
+    padding: 1rem;
+`
+const StyledTopContainer = styled.div`
+    display: flex;
+`
+const StyledContainerLeft = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+`
+const StyledProfilePhoto = styled.div`
+    width: 6.5rem;
+    height: 6.5rem;
+    border: 2px solid black;
+    border-radius: 50%;
+`
+const StyledContainerRight = styled.div`
+    display: flex;
+    flex-direction: column;
+`
 
 export default function Web() {
-  const DynamicLayout = dynamic(() => import('../../components/Layout'), {
-    ssr: false,
-  });
+    const DynamicLayout = dynamic(() => import("../../components/Layout"), {
+        ssr: false,
+    })
 
-  const { user, logout } = useAuth();
+    const { user, logout } = useAuth()
 
-  return (
-    <DynamicLayout>
-      <Head>
-        <title>Account</title>
-      </Head>
-      {/* Put here already styled Account page component & remove Header with Button! */}
-      <Header title="Account" />
-      <Button onClick={logout} text="Log out" size="small" />
-    </DynamicLayout>
-  );
+    return (
+        <DynamicLayout>
+            <StyledMainWrapper>
+                <Head>
+                    <title>My Profile</title>
+                </Head>
+                <Header title="My Profile" />
+                <StyledTitle>Profile photo</StyledTitle>
+                <StyledTopContainer>
+                    <StyledContainerLeft>
+                        <StyledProfilePhoto></StyledProfilePhoto>
+                        <Button
+                            onClick={undefined}
+                            text="Upload new picture"
+                            size="small"
+                        />
+                        <Button
+                            onClick={undefined}
+                            text="Delete picture"
+                            size="small"
+                        />
+                    </StyledContainerLeft>
+                    <StyledContainerRight>
+                        <Header title="Name surname" />
+                        <h3>some-email@gmail.com</h3>
+                    </StyledContainerRight>
+                </StyledTopContainer>
+
+                <Button onClick={logout} text="Log out" size="small" />
+            </StyledMainWrapper>
+        </DynamicLayout>
+    )
 }
