@@ -12,10 +12,8 @@ const StyledWrapper = styled.div<InputProps>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-
   background-color: "#e8e7e7";
   border: ${(props) => (props.border ? "1px solid grey" : "none")};
   border-radius: 4px;
@@ -28,13 +26,11 @@ const StyledWrapper = styled.div<InputProps>`
       ? "15rem"
       : "10rem"};
   padding: 0.1rem;
-
   &:hover {
     background-color: "#e8e7e7da";
   }
   &:focus-within {
     background-color: "#e8e7e7da";
-
     box-shadow: 0 0 4px #c1c1c1;
   }
 `;
@@ -74,11 +70,9 @@ const StyledInput = styled.input<InputProps>`
       : "none"};
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-
   background: none;
   color: #535353;
   font-size: 1rem;
-
   &:focus {
     outline: none;
   }
