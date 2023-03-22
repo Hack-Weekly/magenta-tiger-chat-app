@@ -35,44 +35,47 @@ const NavbarContainer = styled.nav`
   }
 `;
 
+const pathToPage: { [key: string]: NavPages } = {
+  '/': NavPages.Home,
+  '/search': NavPages.Search,
+  '/account': NavPages.Account,
+};
+
 const Navbar = () => {
   const path = useRouter().pathname;
   const router = useRouter();
+  const [activePage, setActivePage] = useState<NavPages>(pathToPage[path]);
 
   useEffect(() => {
-    if (path == '/search') {
-      setActivePage('search');
-    } else if (path == '/account') {
-      setActivePage('account');
-    } else {
-      setActivePage('home');
-    }
+    setActivePage(pathToPage[path]);
   }, [path]);
 
-  const [activePage, setActivePage] = useState<NavPages>('home');
+  const handleButtonClick = (path: string) => {
+    router.push(path);
+  };
 
   return (
     <NavbarContainer>
       <Button
         text="Home"
         variant="navIcon"
-        active={activePage === 'home'}
+        active={activePage === NavPages.Home}
         icon={faHouse}
-        onClick={() => router.push('/')}
+        onClick={() => handleButtonClick('/')}
       />
       <Button
         text="Search"
         variant="navIcon"
-        active={activePage === 'search'}
+        active={activePage === NavPages.Search}
         icon={faSearch}
-        onClick={() => router.push('/search')}
+        onClick={() => handleButtonClick('/search')}
       />
       <Button
         text="Account"
         variant="navIcon"
-        active={activePage === 'account'}
+        active={activePage === NavPages.Account}
         icon={faUser}
-        onClick={() => router.push('/account')}
+        onClick={() => handleButtonClick('/account')}
       />
     </NavbarContainer>
   );

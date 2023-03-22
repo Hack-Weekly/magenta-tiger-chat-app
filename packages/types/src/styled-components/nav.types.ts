@@ -1,1 +1,5 @@
-export type NavPages = 'home' | 'search' | 'account';
+export enum NavPages {
+  Home = 'home',
+  Search = 'search',
+  Account = 'account',
+}
