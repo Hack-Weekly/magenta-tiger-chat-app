@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Registration() {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
 
@@ -14,10 +15,11 @@ export default function Registration() {
 
     const user = {
       username: username,
+      email: email,
       password: password,
     };
 
-    fetch("http://localhost:1337/api/register", {
+    fetch("http://localhost:8089/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,6 +32,7 @@ export default function Registration() {
 
     // Reset form fields
     setUsername("");
+    setEmail("");
     setPassword("");
     router.push("/");
   }
@@ -44,6 +47,14 @@ export default function Registration() {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>

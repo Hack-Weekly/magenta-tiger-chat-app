@@ -1,19 +1,18 @@
-import { Request, Response } from 'express';
-import { Document } from 'mongoose';
-
+import { Request, Response } from "express";
+import { Document } from "mongoose";
 
 export interface Config {
-    port: Number
-    dbUrl: string
+  port: Number;
+  dbUrl: string;
 }
 
 export interface AuthController {
-    createUser(req: Request, res: Response): Promise<Response>
-    login(req: Request, res: Response): Promise<Response>
+  createUser(req: Request, res: Response): Promise<Response>;
+  login(req: Request, res: Response): Promise<Response>;
 }
 
-export interface IUser extends Document{
-    email: string,
-    password: string,
-    name: string,
+export interface IUser extends Document {
+  email: string;
+  password: string;
+  username: string;
 }
