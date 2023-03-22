@@ -1,14 +1,10 @@
 import Head from 'next/head';
-
 import styled from 'styled-components';
-import { useAuth } from '../../context/AuthContext';
-import { Button, Header } from 'ui';
 import Login from '../../components/Login';
 
 export default function Web() {
-  const { user, logout } = useAuth();
-
   const LoginPageWrapper = styled.div`
+    //Will be removed later
     display: flex;
     flex-direction: column;
     align-items: flex-start;

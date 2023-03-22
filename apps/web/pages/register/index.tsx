@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import Registration from '../../components/Registration';
 
 export default function Web() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   return (
     <>

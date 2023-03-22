@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
 import { useAuth } from '../context/AuthContext';
-import { Button, Header } from 'ui';
+import { Header } from 'ui';
 import Head from 'next/head';
-import { faHouse } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function Web() {
   const { user } = useAuth();
