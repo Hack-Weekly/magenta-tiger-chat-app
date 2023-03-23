@@ -68,7 +68,6 @@ const StyledWrapper = styled.div<InputProps>`
         ? '4px'
         : '10px'};
     `}
-
   span {
     transition: 0.2s;
     position: absolute;
