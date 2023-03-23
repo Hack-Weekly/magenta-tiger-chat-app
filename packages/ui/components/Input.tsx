@@ -35,7 +35,7 @@ const StyledWrapper = styled.div<InputProps>`
             : props.width === "15rem"
             ? "15rem"
             : "10rem"};
-    padding: 0.1rem;
+    padding: 0.5rem;
 
     &:hover {
         box-shadow: 0 0 4px #c1c1c1;
@@ -61,6 +61,7 @@ const StyledBtn = styled.button<BtnProps>`
     border: none;
     margin-left: 0rem;
     margin-right: 0.2rem;
+    font-size: 1.5rem;
 `
 
 const StyledInput = styled.input<InputProps>`
@@ -81,13 +82,24 @@ const StyledInput = styled.input<InputProps>`
             : "none"};
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-
+    padding-left: 0.4rem;
     background: none;
     color: #535353;
     font-size: 1rem;
 
     &:focus {
         outline: none;
+        border-radius: 0;
+        border-left: ${props =>
+            props.typeOfInput === "search"
+                ? "none"
+                : props.typeOfInput === "edit"
+                ? "1px solid grey"
+                : props.typeOfInput === "send"
+                ? "none"
+                : props.typeOfInput === "email"
+                ? "1px solid grey"
+                : "none"};
     }
 `
 
