@@ -11,6 +11,7 @@ export type ButtonProps = {
   disabled?: boolean;
   active?: boolean;
   size?: Size;
+  full?: boolean;
   onClick?:
     | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
     | undefined;
@@ -22,4 +23,5 @@ export type StyledButtonProps = {
   disabled?: boolean;
   active?: boolean;
   size?: Size;
+  full?: boolean;
 };
