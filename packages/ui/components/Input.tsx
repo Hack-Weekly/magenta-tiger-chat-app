@@ -4,6 +4,8 @@ import {
   faCircleUser,
   faPaperPlane,
   faEnvelope,
+  faEye,
+  faEyeSlash,
 } from '@fortawesome/free-regular-svg-icons';
 
 import {
@@ -16,7 +18,8 @@ import { InputProps } from '../../types/src/styled-components/input-props.types'
 
 const sendIcon = <FontAwesomeIcon icon={faPaperPlane} />;
 const clearIcon = <FontAwesomeIcon icon={faClose} />;
-
+const eyeIcon = <FontAwesomeIcon icon={faEye} />;
+const eyeIconSlash = <FontAwesomeIcon icon={faEyeSlash} />;
 const searchIcon = <FontAwesomeIcon icon={faMagnifyingGlass} />;
 
 const profileIcon = <FontAwesomeIcon icon={faCircleUser} />;
@@ -154,6 +157,7 @@ function Input({
   value = '',
   error = false,
   required = false,
+  isPassShowed = false,
 }: InputProps) {
   return (
     <StyledWrapper variant={variant} width={width} error={error}>
@@ -174,8 +178,10 @@ function Input({
         type={
           variant === 'email'
             ? 'email'
-            : variant === 'password'
+            : variant === 'password' && !isPassShowed
             ? 'password'
+            : variant === 'password' && isPassShowed
+            ? 'text'
             : 'text'
         }
         variant={variant}
@@ -212,8 +218,11 @@ function Input({
         autoCorrect="false"
         required={required}
       />
-      {(variant === 'send' || (variant === 'search' && value.length > 0)) && (
+      {(variant === 'send' ||
+        (variant === 'search' && value.length > 0) ||
+        (variant === 'password' && value.length > 0)) && (
         <StyledBtn
+          type="button"
           variant={variant}
           onClick={onClick}
           title={
@@ -228,6 +237,10 @@ function Input({
             ? clearIcon
             : variant === 'send'
             ? sendIcon
+            : variant === 'password' && !isPassShowed
+            ? eyeIcon
+            : variant === 'password' && isPassShowed
+            ? eyeIconSlash
             : null}
         </StyledBtn>
       )}

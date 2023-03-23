@@ -6,4 +6,5 @@ export type InputProps = {
   value?: string;
   error?: boolean;
   required?: boolean;
+  isPassShowed?: boolean;
 };
