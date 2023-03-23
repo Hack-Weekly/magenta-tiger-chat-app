@@ -1,24 +1,24 @@
-import styled from 'styled-components';
-import { getFirstLetter } from 'ui/utils/getFirstLetter';
+import styled from "styled-components";
+import { getFirstLetter } from "ui/utils/getFirstLetter";
 
-import { ChatPreviewProps } from '../../types/src/styled-components/chat-preview-props';
+import { ChatPreviewProps } from "../../types/src/styled-components/chat-preview-props";
 
 const cutDescription = (text: string) => {
   // Add '...' when we have description longer than 35 char. (Only on type CHAT or EDIT)
-  return text.length > 35 ? text.slice(0, 35).trim() + '...' : text;
+  return text?.length > 35 ? text.slice(0, 35).trim() + "..." : text;
 };
 
 const formatTime = (timestamp: number): string => {
   // Convert timestamp to human date - HH:MM
   const date = new Date(timestamp * 1000); // Convert to milliseconds
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
   return `${hours}:${minutes}`;
 };
 
 const StyledChatPreview = styled.li`
   max-width: 960px; // Remove later
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-style: normal;
   width: 100%;
   display: flex;
@@ -124,7 +124,7 @@ export const StyleChatListItem = ({
   isNotified,
 }: ChatPreviewProps) => (
   <StyledChatPreview onClick={onClick}>
-    {variant === 'edit' && (
+    {variant === "edit" && (
       <StyledEditWrapper>{/* !DELETE chat btn component*/}</StyledEditWrapper>
     )}
     <StyledImageWrapper>
@@ -138,14 +138,14 @@ export const StyleChatListItem = ({
     <StyledInfoWrapper>
       <StyledTitle>{title}</StyledTitle>
       <StyledDescription>
-        {variant === 'invite'
-          ? 'You have been invited to this group'
-          : description.length !== 0
+        {variant === "invite"
+          ? "You have been invited to this group"
+          : description?.length !== 0
           ? cutDescription(description)
-          : 'No messages yet'}
+          : "No messages yet"}
       </StyledDescription>
     </StyledInfoWrapper>
-    {variant === 'invite' && (
+    {variant === "invite" && (
       <StyledEditWrapper>
         {/* !ADD  DECLINE chat btn component*/}
       </StyledEditWrapper>
@@ -155,7 +155,7 @@ export const StyleChatListItem = ({
 );
 
 StyleChatListItem.defaultProps = {
-  variant: 'chat',
+  variant: "chat",
   onClick: undefined,
   imageUrl: null,
   title: null,
