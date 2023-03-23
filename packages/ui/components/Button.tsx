@@ -13,7 +13,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   border-radius: 15px;
   padding: 0.55rem 0.86rem;
   font-family: 'Poppins', sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
   transition: 0.2s;
 
