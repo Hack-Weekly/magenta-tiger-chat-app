@@ -1,3 +1,5 @@
+import styled from "styled-components"
+import GlobalStyle from "./global-styles/GlobalStyle"
 import {
     faCircleUser,
     faPaperPlane,
@@ -5,16 +7,17 @@ import {
 } from "@fortawesome/free-regular-svg-icons"
 import { faKey, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import styled from "styled-components"
-import { DivProps, InputProps } from "../../types/src/props/"
+
+import { BtnProps, InputProps } from "../../types/src/props/input-props.types"
 
 const StyledWrapper = styled.div<InputProps>`
+    background-color: #e8e7e7;
+
     display: flex;
     align-items: center;
     justify-content: flex-start;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    background-color: "#e8e7e7";
     border: ${props => (props.border ? "1px solid grey" : "none")};
     border-radius: 4px;
     width: ${props =>
@@ -25,22 +28,33 @@ const StyledWrapper = styled.div<InputProps>`
             : props.width === "15rem"
             ? "15rem"
             : "10rem"};
-    padding: 0.1rem;
+    padding: 0.5rem;
+
     &:hover {
-        background-color: "#e8e7e7da";
+        box-shadow: 0 0 4px #c1c1c1;
     }
+
     &:focus-within {
-        background-color: "#e8e7e7da";
+        background-color: #f4f1f1da;
+
+        box-shadow: 0 0 4px #c1c1c1;
+    }
+    &:active {
+        background-color: #f4f1f1da;
+
         box-shadow: 0 0 4px #c1c1c1;
     }
 `
 
-const StyledDiv = styled.div<DivProps>`
+const StyledBtn = styled.button<BtnProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 0.2rem;
-    margin-right: 0.4rem;
+    background: none;
+    border: none;
+    margin-left: 0rem;
+    margin-right: 0.2rem;
+    font-size: 1.5rem;
 `
 
 const StyledInput = styled.input<InputProps>`
@@ -70,17 +84,29 @@ const StyledInput = styled.input<InputProps>`
             : "none"};
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    padding-left: 0.4rem;
     background: none;
     color: #535353;
     font-size: 1rem;
     &:focus {
         outline: none;
+        border-radius: 0;
+        border-left: ${props =>
+            props.typeOfInput === "search"
+                ? "none"
+                : props.typeOfInput === "edit"
+                ? "1px solid grey"
+                : props.typeOfInput === "send"
+                ? "none"
+                : props.typeOfInput === "email"
+                ? "1px solid grey"
+                : "none"};
     }
 `
 
 function Input(
     { typeOfInput, border, width }: InputProps,
-    { onClick }: DivProps
+    { onClick }: BtnProps
 ) {
     const profileIcon = (
         <FontAwesomeIcon icon={faCircleUser} color={"#535353"} />
@@ -106,23 +132,23 @@ function Input(
 
     return (
         <>
+            <GlobalStyle />
             <StyledWrapper
                 width={width}
                 border={border}
                 typeOfInput={typeOfInput}
             >
                 {typeOfInput === "search" ? (
-                    <StyledDiv onClick={onClick}>{searchIcon}</StyledDiv>
-                ) : typeOfInput === "email" ? (
-                    <StyledDiv onClick={onClick}>{profileIcon}</StyledDiv>
+                    <StyledBtn onClick={onClick}>{searchIcon}</StyledBtn>
                 ) : typeOfInput === "edit" ? (
-                    <StyledDiv onClick={onClick}>{penIcon}</StyledDiv>
+                    <StyledBtn onClick={onClick}>{penIcon}</StyledBtn>
+                ) : typeOfInput === "email" ? (
+                    <StyledBtn onClick={onClick}>{profileIcon}</StyledBtn>
                 ) : typeOfInput === "password" ? (
-                    <StyledDiv onClick={onClick}>{keyIcon}</StyledDiv>
+                    <StyledBtn onClick={onClick}>{keyIcon}</StyledBtn>
                 ) : (
                     ""
                 )}
-
                 <StyledInput
                     type={dynamicType}
                     typeOfInput={typeOfInput}
@@ -131,7 +157,7 @@ function Input(
                 />
 
                 {typeOfInput === "send" ? (
-                    <StyledDiv onClick={onClick}>{sendIcon}</StyledDiv>
+                    <StyledBtn onClick={onClick}>{sendIcon}</StyledBtn>
                 ) : (
                     ""
                 )}
@@ -142,7 +168,7 @@ function Input(
 
 Input.defaultProps = {
     typeOfInput: "search",
-    border: true,
+    border: false,
     width: "15rem",
     onClick: undefined,
 }

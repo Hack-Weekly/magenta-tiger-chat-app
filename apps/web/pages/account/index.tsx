@@ -38,6 +38,7 @@ const StyledContainerBottom = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 `
 
 export default function Web() {
@@ -76,8 +77,13 @@ export default function Web() {
                 </StyledTopContainer>
                 <StyledContainerBottom>
                     <StyledTitle>Edit profile</StyledTitle>
+                    <Input typeOfInput="email" width="20rem" border={true} />
+                    <Button
+                        onClick={undefined}
+                        text="Save changes"
+                        size="small"
+                    />
                 </StyledContainerBottom>
-                <Input typeOfInput="email" width="100%" border={true} />
                 <Button onClick={logout} text="Log out" size="small" />
             </StyledMainWrapper>
         </DynamicLayout>
