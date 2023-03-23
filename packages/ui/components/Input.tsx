@@ -190,7 +190,17 @@ function Input({ variant, width, onClick, onChange, value = '' }: InputProps) {
         autoCorrect="false"
       />
       {(variant === 'search' || variant === 'send') && (
-        <StyledBtn variant={variant} onClick={onClick}>
+        <StyledBtn
+          variant={variant}
+          onClick={onClick}
+          title={
+            variant === 'search'
+              ? 'Clear'
+              : variant === 'send'
+              ? 'Send message'
+              : ''
+          }
+        >
           {variant === 'search' && value.length > 0
             ? clearIcon
             : variant === 'send'
