@@ -5,12 +5,12 @@ import { UserController } from "../type/types";
 export class Users implements UserController {
   // Get all users
   async getAllUser(req: Request, res: Response): Promise<Response> {
-    const user = await User.find();
+    const data = await User.find();
 
-    if (!user) {
+    if (!data) {
       return res.json({ status: 401, message: "user not found" });
     }
 
-    return res.json({ status: 200, user });
+    return res.json(data);
   }
 }

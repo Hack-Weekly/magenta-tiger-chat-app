@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { getFirstLetter } from "ui/utils/getFirstLetter";
 
 import { ChatPreviewProps } from "../../types/src/styled-components/chat-preview-props";
+import { getFirstLetter } from "../utils/getFirstLetter";
 
 const cutDescription = (text: string) => {
   // Add '...' when we have description longer than 35 char. (Only on type CHAT or EDIT)
@@ -31,6 +31,30 @@ const StyledChatPreview = styled.li`
   cursor: pointer;
   &:hover {
     background-color: #ececec18;
+  }
+`;
+
+const StyledUserContainer = styled.button`
+  /* Something is wrong with the parent container. TODO for later */
+  max-width: 94%;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.5rem;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: var(--btn-dim);
+  border: none;
+  &:hover {
+    background-color: var(--btn-primary-text);
+  }
+  &:active {
+    background-color: var(--btn-dim-hover);
+  }
+
+  @media (min-width: 650px) {
+    max-width: 512px;
   }
 `;
 
@@ -122,37 +146,59 @@ export const StyleChatListItem = ({
   description,
   timestamp,
   isNotified,
-}: ChatPreviewProps) => (
-  <StyledChatPreview onClick={onClick}>
-    {variant === "edit" && (
-      <StyledEditWrapper>{/* !DELETE chat btn component*/}</StyledEditWrapper>
-    )}
-    <StyledImageWrapper>
-      {imageUrl ? (
-        <StyledImage src={imageUrl} alt="" />
+}: ChatPreviewProps) => {
+  return (
+    <>
+      {variant === "user-list" ? (
+        <StyledUserContainer onClick={onClick}>
+          <StyledImageWrapper>
+            {imageUrl ? (
+              <StyledImage src={imageUrl} alt="" />
+            ) : (
+              <StyledPlaceholder>{getFirstLetter(title)}</StyledPlaceholder>
+            )}
+            {isNotified && <StyledNotification />}
+          </StyledImageWrapper>
+          <StyledInfoWrapper>
+            <StyledTitle>{title}</StyledTitle>
+          </StyledInfoWrapper>
+        </StyledUserContainer>
       ) : (
-        <StyledPlaceholder>{getFirstLetter(title)}</StyledPlaceholder>
+        <StyledChatPreview onClick={onClick}>
+          {variant === "edit" && (
+            <StyledEditWrapper>
+              {/* !DELETE chat btn component*/}
+            </StyledEditWrapper>
+          )}
+          <StyledImageWrapper>
+            {imageUrl ? (
+              <StyledImage src={imageUrl} alt="" />
+            ) : (
+              <StyledPlaceholder>{getFirstLetter(title)}</StyledPlaceholder>
+            )}
+            {isNotified && <StyledNotification />}
+          </StyledImageWrapper>
+          <StyledInfoWrapper>
+            <StyledTitle>{title}</StyledTitle>
+            <StyledDescription>
+              {variant === "invite"
+                ? "You have been invited to this group"
+                : description?.length !== 0
+                ? cutDescription(description)
+                : "No messages yet"}
+            </StyledDescription>
+          </StyledInfoWrapper>
+          {variant === "invite" && (
+            <StyledEditWrapper>
+              {/* !ADD  DECLINE chat btn component*/}
+            </StyledEditWrapper>
+          )}
+          <StyledDate>{formatTime(timestamp)}</StyledDate>
+        </StyledChatPreview>
       )}
-      {isNotified && <StyledNotification />}
-    </StyledImageWrapper>
-    <StyledInfoWrapper>
-      <StyledTitle>{title}</StyledTitle>
-      <StyledDescription>
-        {variant === "invite"
-          ? "You have been invited to this group"
-          : description?.length !== 0
-          ? cutDescription(description)
-          : "No messages yet"}
-      </StyledDescription>
-    </StyledInfoWrapper>
-    {variant === "invite" && (
-      <StyledEditWrapper>
-        {/* !ADD  DECLINE chat btn component*/}
-      </StyledEditWrapper>
-    )}
-    <StyledDate>{formatTime(timestamp)}</StyledDate>
-  </StyledChatPreview>
-);
+    </>
+  );
+};
 
 StyleChatListItem.defaultProps = {
   variant: "chat",
