@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 import { useAuth } from '../../context/AuthContext';
-import Registration from '../../components/Registration';
+import Auth from '../../components/Auth';
 
 export default function Web() {
   const { user } = useAuth();
@@ -11,8 +11,7 @@ export default function Web() {
       <Head>
         <title>Register</title>
       </Head>
-      {/* Put here already styled Registration page component! */}
-      {!user && <Registration />}
+      <Auth variant="signup" />
     </>
   );
 }

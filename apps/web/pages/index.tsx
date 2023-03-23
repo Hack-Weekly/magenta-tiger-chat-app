@@ -17,7 +17,6 @@ export default function Web() {
       </Head>
       {/* Put here already styled Home page component & remove Header! */}
       <Header variant="welcome" userName={user ? user?.username : 'Guest'} />
-      <Input variant="search" />
     </DynamicLayout>
   );
 }
