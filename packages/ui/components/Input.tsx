@@ -49,17 +49,9 @@ const StyledWrapper = styled.div<InputProps>`
           : 'transparent'};
         border-color: ${variant === 'search' || variant === 'send'
           ? 'none'
+          : error == true
+          ? '#f1404097'
           : '#99999971'};
-      }
-      :focus-visible {
-        background-color: ${variant === 'search' || variant === 'send'
-          ? '#dadadada'
-          : 'transparent'};
-      }
-      :active {
-        background-color: ${variant === 'search' || variant === 'send'
-          ? '#dadadada'
-          : 'transparent'};
       }
       border: ${variant === 'search' || variant === 'send'
         ? 'none'
@@ -74,10 +66,12 @@ const StyledWrapper = styled.div<InputProps>`
     transition: 0.2s;
     position: absolute;
     left: 0.3rem;
-    ${({ variant }) =>
+    ${({ variant, error }) =>
       css`
         color: ${variant === 'search' || variant === 'send'
           ? '#7c7c7c'
+          : error == true
+          ? '#e42222cc'
           : '#999999'};
         font-size: ${variant === 'search' || variant === 'send'
           ? '1rem'
@@ -112,7 +106,7 @@ const StyledInput = styled.input<InputProps>`
   margin: 0;
   background-color: transparent;
   font-size: 1rem;
-  ${({ variant }) =>
+  ${({ variant, error }) =>
     css`
       color: ${variant === 'search' || variant === 'send'
         ? '#535353'
@@ -127,6 +121,24 @@ const StyledInput = styled.input<InputProps>`
         : variant === 'send'
         ? '.5rem 2rem .5rem .3rem'
         : '.7rem 2rem .7rem 2.2rem'};
+      :focus-visible {
+        background-color: ${variant === 'search' || variant === 'send'
+          ? '#dadadada'
+          : 'transparent'};
+        border-radius: ${variant === 'search' || variant === 'send'
+          ? '4px'
+          : '10px '};
+        border-color: ${variant === 'search' || variant === 'send'
+          ? 'none'
+          : error == true
+          ? '#f1404097'
+          : '#99999971'};
+      }
+      :active {
+        background-color: ${variant === 'search' || variant === 'send'
+          ? '#dadadada'
+          : 'transparent'};
+      }
     `}
 
   &:focus {
@@ -141,6 +153,7 @@ function Input({
   onChange,
   value = '',
   error = false,
+  required = false,
 }: InputProps) {
   return (
     <StyledWrapper variant={variant} width={width} error={error}>
@@ -197,8 +210,9 @@ function Input({
         onChange={onChange}
         autoComplete="false"
         autoCorrect="false"
+        required={required}
       />
-      {(variant === 'search' || variant === 'send') && (
+      {(variant === 'send' || (variant === 'search' && value.length > 0)) && (
         <StyledBtn
           variant={variant}
           onClick={onClick}
