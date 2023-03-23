@@ -31,7 +31,7 @@ const StyledWrapper = styled.div<InputProps>`
   transition: 0.2s;
   padding: 0;
   margin: 0;
-  ${({ width, variant }) =>
+  ${({ width, variant, error }) =>
     css`
       width: ${width === '100%'
         ? '100%'
@@ -63,10 +63,12 @@ const StyledWrapper = styled.div<InputProps>`
       }
       border: ${variant === 'search' || variant === 'send'
         ? 'none'
+        : error == true
+        ? '2px solid #e42222cc'
         : '2px solid #9999999e'};
       border-radius: ${variant === 'search' || variant === 'send'
         ? '4px'
-        : '10px'};
+        : '10px '};
     `}
   span {
     transition: 0.2s;
@@ -132,9 +134,16 @@ const StyledInput = styled.input<InputProps>`
   }
 `;
 
-function Input({ variant, width, onClick, onChange, value = '' }: InputProps) {
+function Input({
+  variant,
+  width,
+  onClick,
+  onChange,
+  value = '',
+  error = false,
+}: InputProps) {
   return (
-    <StyledWrapper variant={variant} width={width}>
+    <StyledWrapper variant={variant} width={width} error={error}>
       {variant !== 'send' && (
         <span>
           {variant === 'search'

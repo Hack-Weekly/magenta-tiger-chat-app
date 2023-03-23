@@ -4,4 +4,5 @@ export interface InputProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
+  error?: boolean;
 }
