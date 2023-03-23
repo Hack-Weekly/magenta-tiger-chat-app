@@ -2,7 +2,10 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700;800&display=swap');
   :root {
+    
     --btn-primary: #1F986C;
     --btn-primary-hover: #24af7c;
     --btn-primary-active: #1c865f;
@@ -38,12 +41,16 @@ const GlobalStyle = createGlobalStyle`
     }
 
     *::-moz-selection { /* Code for Firefox */
-      background: #15b67b50;
+      background: #9e9e9e50;
    }
 
     *::selection {
-     background: #15b67b50;
+     background: #9e9e9e50;
     }
+  }
+
+  p, h1, h2, h3, a, span, li, ul, button {
+    font-family: 'Poppins', sans-serif;
   }
 `;
 
