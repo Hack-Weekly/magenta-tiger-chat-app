@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic"
 import { useAuth } from "../context/AuthContext"
-import { Header } from "ui"
+import { Header, Input } from "ui"
 import Head from "next/head"
 
 export default function Web() {
@@ -20,6 +20,7 @@ export default function Web() {
                 variant="welcome"
                 userName={user ? user?.username : "Guest"}
             />
+            <Input variant="search" />
         </DynamicLayout>
     )
 }

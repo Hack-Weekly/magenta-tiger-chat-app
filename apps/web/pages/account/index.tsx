@@ -9,12 +9,17 @@ import { useAuth } from "../../context/AuthContext"
 const StyledTitle = styled.h3`
     margin: 0;
     margin-left: 0.5rem;
+    margin-top: 1.5rem;
 `
 const StyledMainWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
     padding: 1rem;
 `
 const StyledTopContainer = styled.div`
     display: flex;
+    margin-bottom: 3rem;
+    margin-top: 1rem;
 `
 const StyledContainerLeft = styled.div`
     display: flex;
@@ -32,13 +37,40 @@ const StyledProfilePhoto = styled.div`
 const StyledContainerRight = styled.div`
     display: flex;
     flex-direction: column;
+
+    h2,
+    h3 {
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        font-weight: 500;
+        font-size: 1.5rem;
+    }
+    h3 {
+        font-weight: 100;
+        font-size: 1rem;
+    }
 `
 
-const StyledContainerBottom = styled.div`
+const StyledContainerMiddle = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    gap: 1rem;
+`
+const StyledWrapperLeft = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+`
+
+const StyledWrapperRight = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
 `
 
 export default function Web() {
@@ -65,25 +97,30 @@ export default function Web() {
                             size="small"
                         />
                         <Button
+                            danger={true}
                             onClick={undefined}
                             text="Delete picture"
                             size="small"
                         />
                     </StyledContainerLeft>
                     <StyledContainerRight>
-                        <Header title="Name surname" />
+                        <h2>Name surname</h2>
                         <h3>some-email@gmail.com</h3>
                     </StyledContainerRight>
                 </StyledTopContainer>
-                <StyledContainerBottom>
-                    <StyledTitle>Edit profile</StyledTitle>
-                    <Input typeOfInput="email" width="20rem" border={true} />
-                    <Button
-                        onClick={undefined}
-                        text="Save changes"
-                        size="small"
-                    />
-                </StyledContainerBottom>
+                <StyledContainerMiddle>
+                    <StyledWrapperLeft>
+                        <StyledTitle>Edit profile</StyledTitle>
+                    </StyledWrapperLeft>
+                    <Input variant="user" width="100%" />
+                    <StyledWrapperRight>
+                        <Button
+                            onClick={undefined}
+                            text="Save changes"
+                            size="small"
+                        />
+                    </StyledWrapperRight>
+                </StyledContainerMiddle>
                 <Button onClick={logout} text="Log out" size="small" />
             </StyledMainWrapper>
         </DynamicLayout>
