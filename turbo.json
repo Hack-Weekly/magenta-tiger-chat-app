@@ -1,20 +1,16 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local", ".env"],
   "pipeline": {
-    "dev:api": {
-      "outputs": ["dist/**", ".next/**"],
-      "env": ["MONGODB_CONNECTION", "API_URL"]
-    },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "env": ["API_URL"],
+      "outputs": ["dist/**"]
     },
-    "lint": {
-      "outputs": []
-    },
-    "dev": {
-      "cache": false
+    "web#build": {
+      "dependsOn": ["^build"],
+      "env": ["API_URL"],
+      "outputs": [".next/**"]
     }
-  }
+  },
+  "globalDependencies": ["tsconfig.json", "**/.env.*local", ".env"]
 }
