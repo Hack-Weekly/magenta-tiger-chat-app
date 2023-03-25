@@ -7,7 +7,7 @@ export default function Chat() {
   return (
     <section>
       <h2>Chat Main Page</h2>
-      <Input type="sendMessage" />
+      <Input variant="send" />
       <button>Send message</button>
       <button onClick={logout}>Logout</button>
     </section>

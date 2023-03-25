@@ -18,6 +18,8 @@ const GlobalStyle = createGlobalStyle`
     --btn-icon-hover-active: #24af7c;
     --btn-disabled: #e0e0e0;
     --btn-disabled-text: #575757;
+
+    --grey-text: #8B8B8B;
   }
 
   body, html {

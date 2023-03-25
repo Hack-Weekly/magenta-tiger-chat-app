@@ -1,17 +1,17 @@
-import { Button, Input, StyleChatListItem, StyledHeader } from 'ui';
+import { Button, Input, StyleChatListItem, Header } from 'ui';
 
 export default function Docs() {
   return (
     <div>
       <h1>Docs +</h1>
-      <StyledHeader
+      <Header
         variant="welcome"
         title="Test"
         userName="Magenta"
         imageUrl={null}
       />
       <Button />
-      <Input type="search" />
+      <Input variant="search" />
       <StyleChatListItem
         variant="chat"
         title="#magenta-tiger-chat"
