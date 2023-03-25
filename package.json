@@ -10,7 +10,6 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "dotenv turbo run dev",
-    "api": "nodemon --esm apps/api/src/auth.ts dotenv",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
