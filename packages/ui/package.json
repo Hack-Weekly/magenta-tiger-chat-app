@@ -5,8 +5,7 @@
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"**/*.ts*\"",
-    "build": "turbo run build"
+    "lint": "eslint \"**/*.ts*\""
   },
   "dependencies": {
     "types": "*"
