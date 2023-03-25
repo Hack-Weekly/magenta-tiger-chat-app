@@ -4,7 +4,7 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "build": "tsc",
+    "build": "npm i && tsc",
     "start:dev": "ts-node-dev src/index.ts",
     "lint": "tsc --noEmit && eslint src/*.ts",
     "start": "npm run build && node dist/src/index.js"
