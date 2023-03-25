@@ -173,6 +173,7 @@ export default function Auth({ variant }: AuthPageProps) {
   const { login, user } = useAuth();
 
   const router = useRouter();
+  const apiUrl = process.env.API_URL;
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -214,16 +215,13 @@ export default function Auth({ variant }: AuthPageProps) {
     }
 
     try {
-      const response = await fetch(
-        `https://magenta-tiger-chat-app.onrender.com/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        }
-      );
+      const response = await fetch(`${apiUrl}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
 
       const data = await response.json();
 
@@ -277,7 +275,7 @@ export default function Auth({ variant }: AuthPageProps) {
 
     try {
       const response = await fetch(
-        "https://magenta-tiger-chat-app.onrender.com/signup",
+        `${apiUrl}/signup`,
         {
           method: "POST",
           headers: {

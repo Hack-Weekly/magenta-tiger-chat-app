@@ -9,6 +9,7 @@ export default function Registration() {
   const { login } = useAuth();
 
   const router = useRouter();
+  const apiUrl = process.env.API_URL;
 
   function handleSubmit(e: any) {
     e.preventDefault();
@@ -19,7 +20,7 @@ export default function Registration() {
       password: password,
     };
 
-    fetch("https://magenta-tiger-chat-app.onrender.com/signup", {
+    fetch(`${apiUrl}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

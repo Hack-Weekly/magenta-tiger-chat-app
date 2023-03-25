@@ -5,10 +5,10 @@ import { Users } from "../../../../packages/types/src/auth/user.types";
 import PrivateRoute from "../../components/PrivateRoute";
 
 export async function getServerSideProps() {
+  const apiUrl = process.env.API_URL;
+
   try {
-    const response = await fetch(
-      "https://magenta-tiger-chat-app.onrender.com/users"
-    );
+    const response = await fetch(`${apiUrl}/users`);
     const users: Users[] = await response.json();
     return { props: { users } };
   } catch (error) {
