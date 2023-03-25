@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import PrivateRoute from '../../components/PrivateRoute';
 import Head from 'next/head';
-import { Header, StyleChatListItem } from 'ui';
+import { Header, StyledChatListItem } from 'ui';
 import StyledContainer from 'ui/components/StyledContainer';
 import { Users } from '../../../../packages/types/src/auth/user.types';
 
@@ -31,7 +31,7 @@ export default function Search({ users }: Users) {
             description="All users that are using the App currently. Search will come soon :)"
           />
           {users?.map((user) => (
-            <StyleChatListItem
+            <StyledChatListItem
               variant="user-list"
               title={user.username}
               key={user._id}
