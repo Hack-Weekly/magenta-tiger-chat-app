@@ -193,7 +193,7 @@ function Input({
             : variant === 'send'
             ? 'Send message'
             : variant === 'user'
-            ? 'Enter name'
+            ? 'Enter username'
             : variant === 'email'
             ? 'Enter email'
             : variant === 'password'

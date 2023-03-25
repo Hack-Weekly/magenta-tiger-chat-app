@@ -20,7 +20,7 @@ const AuthLayoutWrapper = styled.div`
   align-items: center;
   height: 100vh;
   width: 100%;
-  background-color: transparent;
+  background-color: #f3f3f3;
   @media (min-height: 400px) and (min-width: 680px) {
     height: 100vh;
   }
