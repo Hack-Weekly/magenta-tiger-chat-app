@@ -13,4 +13,29 @@ export class Users implements UserController {
 
     return res.json(data);
   }
+
+  // Edit username
+  async editUsername(req: Request, res: Response): Promise<Response> {
+    const newUsername = req.body;
+    const userId = req.params.id;
+
+    const user = await User.findOneAndUpdate(
+      { _id: userId },
+      { username: newUsername },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.json({ status: 404, message: "User not found" });
+    }
+
+    if (user) {
+      return res.json({
+        status: 200,
+        message: "Username changed successfully",
+        user,
+      });
+    } else {
+    }
+  }
 }

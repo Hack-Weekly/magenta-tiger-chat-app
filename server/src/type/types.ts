@@ -12,6 +12,7 @@ export interface AuthController {
 }
 
 export interface IUser extends Document {
+  id: string;
   email: string;
   password: string;
   username: string;

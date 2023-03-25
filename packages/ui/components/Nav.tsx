@@ -1,10 +1,13 @@
-import styled from 'styled-components';
-import { NavPages } from '../../types/src/styled-components/nav.types';
-import { faHouse, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { faHouse, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import {
+  NavPages,
+  NavProps,
+} from "../../types/src/styled-components/nav.types";
 
-import { Button } from './Button';
+import { Button } from "./Button";
 
 const NavbarContainer = styled.nav`
   position: fixed;
@@ -36,12 +39,12 @@ const NavbarContainer = styled.nav`
 `;
 
 const pathToPage: { [key: string]: NavPages } = {
-  '/': NavPages.Home,
-  '/search': NavPages.Search,
-  '/account': NavPages.Account,
+  "/": NavPages.Home,
+  "/search": NavPages.Search,
+  "/account": NavPages.Account,
 };
 
-const Navbar = () => {
+const Navbar = ({ userId }: NavProps) => {
   const path = useRouter().pathname;
   const router = useRouter();
   const [activePage, setActivePage] = useState<NavPages>(pathToPage[path]);
@@ -61,21 +64,21 @@ const Navbar = () => {
         variant="navIcon"
         active={activePage === NavPages.Home}
         icon={faHouse}
-        onClick={() => handleButtonClick('/')}
+        onClick={() => handleButtonClick("/")}
       />
       <Button
         text="Search"
         variant="navIcon"
         active={activePage === NavPages.Search}
         icon={faSearch}
-        onClick={() => handleButtonClick('/search')}
+        onClick={() => handleButtonClick("/search")}
       />
       <Button
         text="Account"
         variant="navIcon"
         active={activePage === NavPages.Account}
         icon={faUser}
-        onClick={() => handleButtonClick('/account')}
+        onClick={() => handleButtonClick(`/account/${userId}`)}
       />
     </NavbarContainer>
   );

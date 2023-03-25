@@ -1,13 +1,13 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 import dynamic from "next/dynamic";
+import { useEffect } from "react";
 import { Button, Header } from "ui";
 import PrivateRoute from "../../components/PrivateRoute";
 
-export default function Web() {
+export default function Account() {
   const router = useRouter();
   const { user, logout } = useAuth();
   const DynamicLayout = dynamic(() => import("../../components/Layout"), {

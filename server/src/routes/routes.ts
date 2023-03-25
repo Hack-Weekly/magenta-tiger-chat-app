@@ -26,3 +26,8 @@ routes.post("/login", (req: Request, res: Response, next: NextFunction) =>
 routes.get("/users", (req: Request, res: Response, next: NextFunction) =>
   new Users().getAllUser(req, res)
 );
+
+// Edit username
+routes.put("/:id", (req: Request, res: Response, next: NextFunction) =>
+  new Users().editUsername(req, res)
+);

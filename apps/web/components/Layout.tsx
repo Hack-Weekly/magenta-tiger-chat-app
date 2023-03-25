@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { ChildrenProps } from '../../../packages/types/src/props/children.types';
-import { Navbar } from 'ui/components/Nav';
+import { Navbar } from "ui/components/Nav";
+import { ChildrenProps } from "../../../packages/types/src/props/children.types";
+import { useAuth } from "../context";
 
 const LayoutWrapper = styled.div`
   width: 100%;
@@ -18,11 +19,13 @@ const LayoutWrapper = styled.div`
 `;
 
 export default function Layout({ children }: ChildrenProps) {
+  const { user } = useAuth();
+
   return (
     <>
       <LayoutWrapper>
         {children}
-        <Navbar />
+        <Navbar userId={user?._id} />
       </LayoutWrapper>
     </>
   );
