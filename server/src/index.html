@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Socket.IO Client</title>
+    <style>
+        body {
+            margin: 0;
+            padding-bottom: 3rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #token>input {
+            width: 90%;
+            height: 30px;
+            margin: 20px;
+            border: solid 4px blueviolet;
+        }
+
+        #form {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 0.25rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            height: 3rem;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px);
+        }
+
+        #input {
+            border: none;
+            padding: 0 1rem;
+            flex-grow: 1;
+            border-radius: 2rem;
+            margin: 0.25rem;
+        }
+
+        #chat {
+            display: flex;
+            width: 100%;
+            gap: 15px;
+        }
+
+        #users {
+            flex: 1fr 0.5fr 100px;
+            background: rgb(238, 207, 242);
+        }
+
+        #users>li {
+            cursor: pointer;
+        }
+
+        #input:focus {
+            outline: none;
+        }
+
+        #form>button {
+            background: #333;
+            border: none;
+            padding: 0 1rem;
+            margin: 0.25rem;
+            border-radius: 3px;
+            outline: none;
+            color: #fff;
+        }
+
+        #messages {
+            flex: 1fr;
+        }
+
+        #messages>li,
+        #users>li {
+            padding: 0.5rem 1rem;
+        }
+
+        .title {
+            display: none;
+        }
+
+        #messages>li:nth-child(odd) {
+            background: #efefef;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h3>Testing socket.io connection copy and pate userToken here</h3>
+    <div id="token"><input type="text" placeholder="usertoken" id="token-input"></div>
+    <div id="chat">
+        <ul id="users">
+        </ul>
+        <ul id="messages">
+            <li class="displays-chatting-with"></li>
+        </ul>
+    </div>
+    <form id="form" action="">
+        <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+       // <!-- Init Socket IO Client Connection -->
+        const socket = io({ autoConnect: false });
+
+        function connect(e) {
+            const token = e.target.value;
+            socket.auth = { token };
+            socket.connect();
+        }
+
+        var form = document.getElementById('form');
+        var input = document.getElementById('input');
+        var messages = document.getElementById('messages');
+        var tokenInput = document.getElementById('token-input');
+        var userlist = document.getElementById('users');
+        var clientList = [];
+        
+        // on input, pass the inputed token to the "connect function"
+        tokenInput.addEventListener('input', connect);
+
+        form.addEventListener('submit', function (e) {
+            // Retrivea the [user socket_connection_id] attached to the 'li' element that displays the "chatting with info"
+            // This is done strictly for testingn purpose it is not the bestway to do it
+            var recipient = document.getElementsByClassName('displays-chatting-with')[0];
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('private_chat', {
+                    message: input.value,
+                    to: recipient.id
+                });
+                input.value = '';
+            }
+        });
+
+        /**
+         * THE socket_connection_id is needed for sending private messages between clients
+         * -----------------------------------------------------------------------
+         * Because each time the client page is refrehed a new sockent_connection_id
+         * is assigned to the client and the previous id becomes invalid
+         * This is a HACK for reloading the users list without reloading the entire page
+         * to avaid "connection_id" change. This event listener is not needed when using react.
+        */
+        userlist.addEventListener('click', function () {
+            console.log('called===============')
+            userlist.innerHTML = '';
+            for (let user of clientList) {
+                var li = document.createElement('li');
+                li.textContent = user.userConnectionId === socket.id ? `(${user.username}) yourself` : user.username;
+                li.id = user.userConnectionId
+                li.addEventListener('click', selected)
+                userlist.appendChild(li);
+            }
+        });
+
+        function selected() {
+            var li = document.getElementsByClassName('displays-chatting-with')[0];
+            if (this.id !== socket.id && li.textContent === '') {
+                li.textContent = 'chatting with ' + this.textContent
+                li.style.display = 'block'
+                li.style.background = '#34ebdb'
+                // sets the selected user socket_connection_id as the id of the 'li'
+                //  element that dispalays the "chatting with info"
+                // This [user socket_connection_id] is retrived and used as the recipient id when sending private message
+                li.id = this.id;
+                messages.appendChild(li);
+            }
+        }
+
+        // executed when a new user connects to the socket
+        socket.on('users', (users) => {
+            clientList = users;
+            userlist.innerHTML = '';
+            for (let user of users) {
+                var li = document.createElement('li');
+                li.textContent = user.userConnectionId === socket.id ? `(${user.username}) yourself` : user.username;
+                li.id = user.userConnectionId
+                li.addEventListener('click', selected)
+                userlist.appendChild(li);
+            }
+        })
+
+        socket.on('private_message', function ({ message, from }) {
+            var item = document.createElement('li');
+            item.textContent = message;
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        socket.on("connect_error", (err) => {
+            console.log("connect_error", err)
+        });
+
+        socket.on('user disconnected', (message) => {
+            var item = document.createElement('li');
+            item.textContent = message;
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+
+    </script>
+</body>
+
+</html>

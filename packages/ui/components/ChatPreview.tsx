@@ -1,24 +1,24 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { ChatPreviewProps } from "../../types/src/styled-components/chat-preview-props";
-import { getFirstLetter } from "../utils/getFirstLetter";
+import { ChatPreviewProps } from '../../types/src/styled-components/chat-preview-props';
+import { getFirstLetter } from '../utils/getFirstLetter';
 
 const cutDescription = (text: string) => {
   // Add '...' when we have description longer than 35 char. (Only on type CHAT or EDIT)
-  return text?.length > 35 ? text.slice(0, 35).trim() + "..." : text;
+  return text?.length > 35 ? text.slice(0, 35).trim() + '...' : text;
 };
 
 const formatTime = (timestamp: number): string => {
   // Convert timestamp to human date - HH:MM
   const date = new Date(timestamp * 1000); // Convert to milliseconds
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
   return `${hours}:${minutes}`;
 };
 
 const StyledChatPreview = styled.li`
   max-width: 960px; // Remove later
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   width: 100%;
   display: flex;
@@ -37,7 +37,7 @@ const StyledChatPreview = styled.li`
 const StyledUserContainer = styled.button`
   /* Something is wrong with the parent container. TODO for later */
   max-width: 94%;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -138,7 +138,7 @@ const StyledDate = styled.p`
   margin-top: 0;
 `;
 
-export const StyleChatListItem = ({
+export const StyledChatListItem = ({
   variant,
   imageUrl,
   onClick,
@@ -149,7 +149,7 @@ export const StyleChatListItem = ({
 }: ChatPreviewProps) => {
   return (
     <>
-      {variant === "user-list" ? (
+      {variant === 'user-list' ? (
         <StyledUserContainer onClick={onClick}>
           <StyledImageWrapper>
             {imageUrl ? (
@@ -165,7 +165,7 @@ export const StyleChatListItem = ({
         </StyledUserContainer>
       ) : (
         <StyledChatPreview onClick={onClick}>
-          {variant === "edit" && (
+          {variant === 'edit' && (
             <StyledEditWrapper>
               {/* !DELETE chat btn component*/}
             </StyledEditWrapper>
@@ -181,14 +181,14 @@ export const StyleChatListItem = ({
           <StyledInfoWrapper>
             <StyledTitle>{title}</StyledTitle>
             <StyledDescription>
-              {variant === "invite"
-                ? "You have been invited to this group"
+              {variant === 'invite'
+                ? 'You have been invited to this group'
                 : description?.length !== 0
                 ? cutDescription(description)
-                : "No messages yet"}
+                : 'No messages yet'}
             </StyledDescription>
           </StyledInfoWrapper>
-          {variant === "invite" && (
+          {variant === 'invite' && (
             <StyledEditWrapper>
               {/* !ADD  DECLINE chat btn component*/}
             </StyledEditWrapper>
@@ -200,8 +200,8 @@ export const StyleChatListItem = ({
   );
 };
 
-StyleChatListItem.defaultProps = {
-  variant: "chat",
+StyledChatListItem.defaultProps = {
+  variant: 'chat',
   onClick: undefined,
   imageUrl: null,
   title: null,

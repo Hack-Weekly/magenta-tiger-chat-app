@@ -1,10 +1,11 @@
 import Head from "next/head"
-
-import dynamic from "next/dynamic"
-
-import styled from "styled-components"
-import { Button, Header, Input } from "ui"
 import { useAuth } from "../../context/AuthContext"
+import { useEffect } from "react"
+import { useRouter } from "next/router"
+import styled from "styled-components"
+import dynamic from "next/dynamic"
+import { Button, Header, Input } from "ui"
+import PrivateRoute from "../../components/PrivateRoute"
 import { useState } from "react"
 import GlobalStyle from "ui/components/global-styles/GlobalStyle"
 
@@ -151,85 +152,102 @@ export default function Web() {
     const [name, setName] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
+    const router = useRouter()
+    const { user, logout } = useAuth()
     const DynamicLayout = dynamic(() => import("../../components/Layout"), {
         ssr: false,
     })
 
-    const { user, logout } = useAuth()
+    useEffect(() => {
+        // redirect to home if already logged in
+        if (!user) {
+            router.push("/login")
+        }
+    }, [user])
 
-    // const handleChange = event => {
-    //     // event.persist()
-    //     setName(name => ({
-    //         ...name,
-    //         [event.target.name]: event.target.value,
-    //     }))
-    // }
+    const handleChange = e => {
+        e.target.defaultValue = e.target.value
+        setName(e.target.value)
+    }
 
     return (
-        <DynamicLayout>
-            <StyledMainWrapper>
-                <Head>
-                    <title>My Profile</title>
-                </Head>
+        <PrivateRoute>
+            <DynamicLayout>
+                <StyledMainWrapper>
+                    <Head>
+                        <title>My Profile</title>
+                    </Head>
 
-                <Header title="My Profile" />
+                    <Header title="My Profile" />
 
-                <StyledTitle>Profile photo</StyledTitle>
-                <StyledTopContainer>
-                    <StyledContainerLeft>
-                        <StyledProfilePhoto></StyledProfilePhoto>
-                        <Button
-                            onClick={undefined}
-                            text="Upload new picture"
-                            size="small"
+                    <StyledTitle>Profile photo</StyledTitle>
+                    <StyledTopContainer>
+                        <StyledContainerLeft>
+                            <StyledProfilePhoto></StyledProfilePhoto>
+                            <Button
+                                onClick={undefined}
+                                text="Upload new picture"
+                                size="small"
+                            />
+                            <Button
+                                danger={true}
+                                onClick={undefined}
+                                text="Delete picture"
+                                size="small"
+                            />
+                        </StyledContainerLeft>
+                        <StyledContainerRight>
+                            <h2>Name surname</h2>
+                            <h3>some-email@gmail.com</h3>
+                        </StyledContainerRight>
+                    </StyledTopContainer>
+                    <StyledContainerEditData>
+                        <StyledWrapperLeft>
+                            <StyledTitle>Edit profile</StyledTitle>
+                        </StyledWrapperLeft>
+                        <Input
+                            variant="user"
+                            width="100%"
+                            required={false}
+                            onChange={e => {
+                                handleChange(e)
+                            }}
+                            value={name}
                         />
-                        <Button
-                            danger={true}
-                            onClick={undefined}
-                            text="Delete picture"
-                            size="small"
+                        <StyledWrapperRight>
+                            <Button
+                                onClick={undefined}
+                                text="Save changes"
+                                size="small"
+                            />
+                        </StyledWrapperRight>
+                    </StyledContainerEditData>
+                    <StyledContainerEditData>
+                        <StyledWrapperLeft>
+                            <StyledTitle>Change password</StyledTitle>
+                        </StyledWrapperLeft>
+                        <Input
+                            variant="password"
+                            width="100%"
+                            required={false}
+                            onChange={e => {
+                                handleChange(e)
+                            }}
+                            value={name}
                         />
-                    </StyledContainerLeft>
-                    <StyledContainerRight>
-                        <h2>Name surname</h2>
-                        <h3>some-email@gmail.com</h3>
-                    </StyledContainerRight>
-                </StyledTopContainer>
-                <StyledContainerEditData>
-                    <StyledWrapperLeft>
-                        <StyledTitle>Edit profile</StyledTitle>
-                    </StyledWrapperLeft>
-                    <Input
-                        variant="user"
-                        width="100%"
-                        required={false}
-                        onChange={undefined}
-                    />
-                    <StyledWrapperRight>
-                        <Button
-                            onClick={undefined}
-                            text="Save changes"
-                            size="small"
-                        />
-                    </StyledWrapperRight>
-                </StyledContainerEditData>
-                <StyledContainerEditData>
-                    <StyledWrapperLeft>
-                        <StyledTitle>Change password</StyledTitle>
-                    </StyledWrapperLeft>
-                    <Input variant="password" width="100%" required={false} />
-                    <StyledWrapperRight>
-                        <Button
-                            onClick={undefined}
-                            text="Save changes"
-                            size="small"
-                        />
-                    </StyledWrapperRight>
-                </StyledContainerEditData>
-                <StyledLogoutWrapper>
-                    <Button onClick={logout} text="Log out" size="small" />
-                </StyledLogoutWrapper>
-            </StyledMainWrapper>
-        </DynamicLayout>
+                        <StyledWrapperRight>
+                            <Button
+                                onClick={undefined}
+                                text="Save changes"
+                                size="small"
+                            />
+                        </StyledWrapperRight>
+                    </StyledContainerEditData>
+                    <StyledLogoutWrapper>
+                        <Button onClick={logout} text="Log out" size="small" />
+                    </StyledLogoutWrapper>
+                </StyledMainWrapper>
+            </DynamicLayout>
+        </PrivateRoute>
     )
 }
