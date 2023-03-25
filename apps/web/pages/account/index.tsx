@@ -54,7 +54,7 @@ const StyledContainerRight = styled.div`
     }
 `
 
-const StyledContainerMiddle = styled.div`
+const StyledContainerEditData = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,7 +108,7 @@ export default function Web() {
                         <h3>some-email@gmail.com</h3>
                     </StyledContainerRight>
                 </StyledTopContainer>
-                <StyledContainerMiddle>
+                <StyledContainerEditData>
                     <StyledWrapperLeft>
                         <StyledTitle>Edit profile</StyledTitle>
                     </StyledWrapperLeft>
@@ -120,7 +120,20 @@ export default function Web() {
                             size="small"
                         />
                     </StyledWrapperRight>
-                </StyledContainerMiddle>
+                </StyledContainerEditData>
+                <StyledContainerEditData>
+                    <StyledWrapperLeft>
+                        <StyledTitle>Change password</StyledTitle>
+                    </StyledWrapperLeft>
+                    <Input variant="password" width="100%" />
+                    <StyledWrapperRight>
+                        <Button
+                            onClick={undefined}
+                            text="Save changes"
+                            size="small"
+                        />
+                    </StyledWrapperRight>
+                </StyledContainerEditData>
                 <Button onClick={logout} text="Log out" size="small" />
             </StyledMainWrapper>
         </DynamicLayout>
