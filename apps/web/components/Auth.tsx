@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../context';
 import { useRouter } from 'next/router';
 
@@ -20,7 +20,7 @@ const AuthLayoutWrapper = styled.div`
   align-items: center;
   height: 100vh;
   width: 100%;
-  background-color: #f3f3f3;
+  background-color: transparent;
   @media (min-height: 400px) and (min-width: 680px) {
     height: 100vh;
   }
@@ -170,13 +170,20 @@ export default function Auth({ variant }: AuthPageProps) {
   const [validationResponse, setValidationResponse] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const { login } = useAuth();
+  const { login, user } = useAuth();
 
   const router = useRouter();
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    // redirect to home if already logged in
+    if (user) {
+      router.push('/');
+    }
+  }, []);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

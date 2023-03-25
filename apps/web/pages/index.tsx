@@ -1,7 +1,9 @@
-import dynamic from 'next/dynamic';
 import { useAuth } from '../context/AuthContext';
-import { Header, Input } from 'ui';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
+
+import { Header } from 'ui';
+import PrivateRoute from '../components/PrivateRoute';
 
 export default function Web() {
   const { user } = useAuth();
@@ -11,12 +13,13 @@ export default function Web() {
   });
 
   return (
-    <DynamicLayout>
-      <Head>
-        <title>Home</title>
-      </Head>
-      {/* Put here already styled Home page component & remove Header! */}
-      <Header variant="welcome" userName={user ? user?.username : 'Guest'} />
-    </DynamicLayout>
+    <PrivateRoute>
+      <DynamicLayout>
+        <Head>
+          <title>Home</title>
+        </Head>
+        <Header variant="welcome" userName={user ? user?.username : 'Guest'} />
+      </DynamicLayout>
+    </PrivateRoute>
   );
 }

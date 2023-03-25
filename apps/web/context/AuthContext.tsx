@@ -1,7 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../packages/types/src/auth/auth-context.types";
-import { User } from "../../../packages/types/src/auth/user.types";
-import { ChildrenProps } from "../../../packages/types/src/props/children.types";
+import { createContext, useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../../packages/types/src/auth/auth-context.types';
+import { User } from '../../../packages/types/src/auth/user.types';
+import { ChildrenProps } from '../../../packages/types/src/props/children.types';
+
+import { Loader } from 'ui';
 
 const authContextDefaultValues: AuthContext = {
   user: null,
@@ -16,9 +18,11 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }: ChildrenProps) {
+  const [isLoading, setIsLoading] = useState(true);
+
   const [user, setUser] = useState<User | null>(() => {
-    if (typeof window !== "undefined") {
-      const userJson = sessionStorage.getItem("user");
+    if (typeof window !== 'undefined') {
+      const userJson = sessionStorage.getItem('user');
       return userJson ? JSON.parse(userJson) : null;
     } else {
       return null;
@@ -26,11 +30,13 @@ export function AuthProvider({ children }: ChildrenProps) {
   });
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       if (user) {
-        sessionStorage.setItem("user", JSON.stringify(user));
+        sessionStorage.setItem('user', JSON.stringify(user));
+        setIsLoading(false); // Set isLoading to false once the user is authenticated
       } else {
-        sessionStorage.removeItem("user");
+        sessionStorage.removeItem('user');
+        setIsLoading(false); // Set isLoading to false even if the user is not authenticated
       }
     }
   }, [user]);
@@ -50,6 +56,10 @@ export function AuthProvider({ children }: ChildrenProps) {
     login,
     logout,
   };
+
+  if (isLoading) {
+    return <Loader />; // Render a loading bar if isLoading is true
+  }
 
   return (
     <>

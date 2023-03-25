@@ -1,26 +1,36 @@
-import Head from "next/head"
+import Head from 'next/head';
+import { useAuth } from '../../context/AuthContext';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-import dynamic from "next/dynamic"
-
-import styled from "styled-components"
-import { Button, Header } from "ui"
-import { useAuth } from "../../context/AuthContext"
+import dynamic from 'next/dynamic';
+import { Button, Header } from 'ui';
+import PrivateRoute from '../../components/PrivateRoute';
 
 export default function Web() {
-    const DynamicLayout = dynamic(() => import("../../components/Layout"), {
-        ssr: false,
-    })
+  const router = useRouter();
+  const { user, logout } = useAuth();
+  const DynamicLayout = dynamic(() => import('../../components/Layout'), {
+    ssr: false,
+  });
 
-    const { user, logout } = useAuth()
+  useEffect(() => {
+    // redirect to home if already logged in
+    if (!user) {
+      router.push('/login');
+    }
+  }, [user]);
 
-    return (
-        <DynamicLayout>
-            <Head>
-                <title>Account</title>
-            </Head>
-            {/* Put here already styled Account page component & remove Header with Button! */}
-            <Header title="Account" />
-            <Button onClick={logout} text="Log out" size="small" />
-        </DynamicLayout>
-    )
+  return (
+    <PrivateRoute>
+      <DynamicLayout>
+        <Head>
+          <title>Account</title>
+        </Head>
+        {/* Put here already styled Account page component & remove Header with Button! */}
+        <Header title="Account" />
+        <Button onClick={logout} text="Log out" size="small" />
+      </DynamicLayout>
+    </PrivateRoute>
+  );
 }
