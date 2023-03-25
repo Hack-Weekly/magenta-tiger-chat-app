@@ -1,3 +1,3 @@
-export * from "./Chat";
-export * from "./Login";
-export * from "./Registration";
+export * from './Chat';
+export * from './Auth';
+export * from './Registration';

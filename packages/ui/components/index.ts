@@ -5,4 +5,6 @@ export * from "./global-styles/GlobalStyle";
 export * from "./Header";
 export * from "./Input";
 export * from "./Nav";
+export * from './Loader';
 export * from "./StyledContainer";
+

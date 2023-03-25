@@ -13,14 +13,14 @@ const StyledButton = styled.button<StyledButtonProps>`
   border-radius: 15px;
   padding: 0.55rem 0.86rem;
   font-family: 'Poppins', sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   cursor: pointer;
   transition: 0.2s;
-
-  ${({ variant, active, danger, disabled, size }) =>
+  ${({ variant, active, danger, disabled, size, full }) =>
     css`
-      &:hover,
-      &:focus-visible {
+      width: ${full === true ? '100%' : 'auto'};
+      :hover,
+      :focus-visible {
         color: ${(variant === 'navIcon' || variant === 'icon') && !active
           ? 'var(--btn-icon-hover)'
           : (variant === 'navIcon' || variant === 'icon') && active
@@ -46,7 +46,7 @@ const StyledButton = styled.button<StyledButtonProps>`
           : 'none'};
       }
 
-      &:active {
+      :active {
         color: ${(variant === 'navIcon' || variant === 'icon') && !active
           ? 'var(--btn-icon-active)'
           : (variant === 'navIcon' || variant === 'icon') && active
@@ -102,7 +102,7 @@ const StyledButton = styled.button<StyledButtonProps>`
       font-size: ${size === 'small'
         ? '0.8rem'
         : size === 'middle'
-        ? '1.4rem'
+        ? '1rem'
         : '2rem'};
 
       span {
@@ -120,6 +120,7 @@ function Button({
   size = 'middle',
   active,
   onClick,
+  full = false,
 }: ButtonProps) {
   return (
     <StyledButton
@@ -129,6 +130,7 @@ function Button({
       active={active}
       size={size}
       onClick={onClick}
+      full={full}
     >
       {icon && <FontAwesomeIcon icon={icon} />}
       {text && <span>{text}</span>}
