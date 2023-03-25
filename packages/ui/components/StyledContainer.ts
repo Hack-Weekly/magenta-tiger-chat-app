@@ -21,6 +21,8 @@ const StyledContainer = styled.div<ContainerVariant>`
       display: grid;
       gap: 8px;
       padding: 10px;
+      overflow: auto;
+      margin-bottom: 83px;
     `}
 `;
 
