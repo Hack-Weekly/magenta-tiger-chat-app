@@ -3,3 +3,7 @@ export interface User {
   username: string;
   password: string;
 }
+
+export interface Users {
+  users: User[] | undefined;
+}
