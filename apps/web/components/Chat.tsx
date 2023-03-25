@@ -1,5 +1,5 @@
-import { Input } from 'ui';
-import { useAuth } from '../context/AuthContext';
+import { Input } from "ui";
+import { useAuth } from "../context/AuthContext";
 
 export default function Chat() {
   const { user, logout } = useAuth();
@@ -7,7 +7,7 @@ export default function Chat() {
   return (
     <section>
       <h2>Chat Main Page</h2>
-      <Input type="sendMessage" />
+      <Input variant="send" />
       <button>Send message</button>
       <button onClick={logout}>Logout</button>
     </section>
