@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { Auth } from "../controller/auth";
+import { Users } from "../controller/user";
 
 export const routes = Router();
 
@@ -19,4 +20,9 @@ routes.post("/signup", (req: Request, res: Response, next: NextFunction) =>
 // User login
 routes.post("/login", (req: Request, res: Response, next: NextFunction) =>
   new Auth().login(req, res)
+);
+
+// Get all users
+routes.get("/users", (req: Request, res: Response, next: NextFunction) =>
+  new Users().getAllUser(req, res)
 );
