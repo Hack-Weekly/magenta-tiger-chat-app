@@ -186,8 +186,7 @@ export default function Auth({ variant }: AuthPageProps) {
   }, []);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+    //FIXME Problem with login - return 'undefined'
     e.preventDefault();
 
     const user = {
