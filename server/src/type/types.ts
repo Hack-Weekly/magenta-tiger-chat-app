@@ -16,3 +16,7 @@ export interface IUser extends Document {
   password: string;
   username: string;
 }
+
+export interface UserController {
+  getAllUser(req: Request, res: Response): Promise<Response>;
+}
