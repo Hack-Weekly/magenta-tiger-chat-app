@@ -10,10 +10,10 @@ const LayoutWrapper = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+
     @media (min-width: 650px) {
-        flex-direction: row-reverse;
-        justify-content: flex-end;
-        align-items: flex-start;
+        display: grid;
+        grid-template-columns: 4rem 90%;
     }
 `
 
@@ -21,8 +21,8 @@ export default function Layout({ children }: ChildrenProps) {
     return (
         <>
             <LayoutWrapper>
-                {children}
                 <Navbar />
+                {children}
             </LayoutWrapper>
         </>
     )

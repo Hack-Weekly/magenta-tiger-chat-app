@@ -4,6 +4,8 @@ import {
     faCircleUser,
     faPaperPlane,
     faEnvelope,
+    faEye,
+    faEyeSlash,
 } from "@fortawesome/free-regular-svg-icons"
 
 import {
@@ -16,7 +18,8 @@ import { InputProps } from "../../types/src/styled-components/input-props.types"
 
 const sendIcon = <FontAwesomeIcon icon={faPaperPlane} />
 const clearIcon = <FontAwesomeIcon icon={faClose} />
-
+const eyeIcon = <FontAwesomeIcon icon={faEye} />
+const eyeIconSlash = <FontAwesomeIcon icon={faEyeSlash} />
 const searchIcon = <FontAwesomeIcon icon={faMagnifyingGlass} />
 
 const profileIcon = <FontAwesomeIcon icon={faCircleUser} />
@@ -49,17 +52,9 @@ const StyledWrapper = styled.div<InputProps>`
                     : "transparent"};
                 border-color: ${variant === "search" || variant === "send"
                     ? "none"
+                    : error == true
+                    ? "#f1404097"
                     : "#99999971"};
-            }
-            :focus-visible {
-                background-color: ${variant === "search" || variant === "send"
-                    ? "#dadadada"
-                    : "transparent"};
-            }
-            :active {
-                background-color: ${variant === "search" || variant === "send"
-                    ? "#dadadada"
-                    : "transparent"};
             }
             border: ${variant === "search" || variant === "send"
                 ? "none"
@@ -74,10 +69,12 @@ const StyledWrapper = styled.div<InputProps>`
         transition: 0.2s;
         position: absolute;
         left: 0.3rem;
-        ${({ variant }) =>
+        ${({ variant, error }) =>
             css`
                 color: ${variant === "search" || variant === "send"
                     ? "#7c7c7c"
+                    : error == true
+                    ? "#e42222cc"
                     : "#999999"};
                 font-size: ${variant === "search" || variant === "send"
                     ? "1rem"
@@ -112,7 +109,7 @@ const StyledInput = styled.input<InputProps>`
     margin: 0;
     background-color: transparent;
     font-size: 1rem;
-    ${({ variant }) =>
+    ${({ variant, error }) =>
         css`
             color: ${variant === "search" || variant === "send"
                 ? "#535353"
@@ -127,6 +124,24 @@ const StyledInput = styled.input<InputProps>`
                 : variant === "send"
                 ? ".5rem 2rem .5rem .3rem"
                 : ".7rem 2rem .7rem 2.2rem"};
+            :focus-visible {
+                background-color: ${variant === "search" || variant === "send"
+                    ? "#dadadada"
+                    : "transparent"};
+                border-radius: ${variant === "search" || variant === "send"
+                    ? "4px"
+                    : "10px "};
+                border-color: ${variant === "search" || variant === "send"
+                    ? "none"
+                    : error == true
+                    ? "#f1404097"
+                    : "#99999971"};
+            }
+            :active {
+                background-color: ${variant === "search" || variant === "send"
+                    ? "#dadadada"
+                    : "transparent"};
+            }
         `}
 
     &:focus {
@@ -141,6 +156,8 @@ function Input({
     onChange,
     value = "",
     error = false,
+    required = false,
+    isPassShowed = false,
 }: InputProps) {
     return (
         <StyledWrapper variant={variant} width={width} error={error}>
@@ -161,8 +178,10 @@ function Input({
                 type={
                     variant === "email"
                         ? "email"
-                        : variant === "password"
+                        : variant === "password" && !isPassShowed
                         ? "password"
+                        : variant === "password" && isPassShowed
+                        ? "text"
                         : "text"
                 }
                 variant={variant}
@@ -197,9 +216,13 @@ function Input({
                 onChange={onChange}
                 autoComplete="false"
                 autoCorrect="false"
+                required={required}
             />
-            {(variant === "search" || variant === "send") && (
+            {(variant === "send" ||
+                (variant === "search" && value.length > 0) ||
+                (variant === "password" && value.length > 0)) && (
                 <StyledBtn
+                    type="button"
                     variant={variant}
                     onClick={onClick}
                     title={
@@ -214,6 +237,10 @@ function Input({
                         ? clearIcon
                         : variant === "send"
                         ? sendIcon
+                        : variant === "password" && !isPassShowed
+                        ? eyeIcon
+                        : variant === "password" && isPassShowed
+                        ? eyeIconSlash
                         : null}
                 </StyledBtn>
             )}
