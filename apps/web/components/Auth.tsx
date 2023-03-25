@@ -1,18 +1,18 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { useEffect, useState } from 'react';
-import { useAuth } from '../context';
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context";
 
-import { Button, Input } from 'ui';
+import { Button, Input } from "ui";
 
-import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/image";
+import Link from "next/link";
 
-import Logo from 'ui/assets/logo.webp';
-import Banner from 'ui/assets/auth-banner.webp';
+import Banner from "ui/assets/auth-banner.webp";
+import Logo from "ui/assets/logo.webp";
 
-import { AuthPageProps } from '../../../packages/types/src/props/auth-page-props.types';
+import { AuthPageProps } from "../../../packages/types/src/props/auth-page-props.types";
 
 const AuthLayoutWrapper = styled.div`
   display: flex;
@@ -108,7 +108,7 @@ const HeaderInfoWrapper = styled.div`
 `;
 
 const HeaderTitle = styled.h2`
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1.8rem;
   line-height: 37px;
   font-weight: 700;
@@ -117,7 +117,7 @@ const HeaderTitle = styled.h2`
 `;
 
 const HeaderSubTitle = styled.p`
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: #999999;
   font-weight: 400;
   font-size: 0.95rem;
@@ -163,11 +163,11 @@ const FailedText = styled.p`
 `;
 
 export default function Auth({ variant }: AuthPageProps) {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isFormValidated, setIsFormValidated] = useState(true);
-  const [validationResponse, setValidationResponse] = useState('');
+  const [validationResponse, setValidationResponse] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const { login, user } = useAuth();
@@ -181,7 +181,7 @@ export default function Auth({ variant }: AuthPageProps) {
   useEffect(() => {
     // redirect to home if already logged in
     if (user) {
-      router.push('/');
+      router.push("/");
     }
   }, []);
 
@@ -195,42 +195,45 @@ export default function Auth({ variant }: AuthPageProps) {
     };
 
     if (!validateEmail(email)) {
-      setValidationResponse('Please enter a valid email address.');
+      setValidationResponse("Please enter a valid email address.");
       setIsFormValidated(false);
       return;
     } else {
-      setValidationResponse('');
+      setValidationResponse("");
       setIsFormValidated(true);
     }
     if (!validatePassword(password)) {
       setValidationResponse(
-        'Please enter a password that is at least 8 characters long.'
+        "Please enter a password that is at least 8 characters long."
       );
       setIsFormValidated(false);
       return;
     } else {
-      setValidationResponse('');
+      setValidationResponse("");
       setIsFormValidated(true);
     }
 
     try {
-      const response = await fetch('http://localhost:8089/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      });
+      const response = await fetch(
+        `https://magenta-tiger-chat-app.onrender.com/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
 
       const data = await response.json();
 
       await login(data.user);
 
       // Reset form fields
-      setEmail('');
-      setPassword('');
+      setEmail("");
+      setPassword("");
 
-      router.push('/');
+      router.push("/");
     } catch (err: any) {
       setValidationResponse(err);
     }
@@ -246,51 +249,54 @@ export default function Auth({ variant }: AuthPageProps) {
     };
 
     if (!validateName(username)) {
-      setValidationResponse('Please enter a valid name.');
+      setValidationResponse("Please enter a valid name.");
       setIsFormValidated(false);
       return;
     } else {
-      setValidationResponse('');
+      setValidationResponse("");
       setIsFormValidated(true);
     }
     if (!validateEmail(email)) {
-      setValidationResponse('Please enter a valid email address.');
+      setValidationResponse("Please enter a valid email address.");
       setIsFormValidated(false);
       return;
     } else {
-      setValidationResponse('');
+      setValidationResponse("");
       setIsFormValidated(true);
     }
     if (!validatePassword(password)) {
       setValidationResponse(
-        'Please enter a password that is at least 8 characters long.'
+        "Please enter a password that is at least 8 characters long."
       );
       setIsFormValidated(false);
       return;
     } else {
-      setValidationResponse('');
+      setValidationResponse("");
       setIsFormValidated(true);
     }
 
     try {
-      const response = await fetch('http://localhost:8089/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      });
+      const response = await fetch(
+        "https://magenta-tiger-chat-app.onrender.com/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
 
       const data = await response.json();
 
       await login(data.user);
 
       // Reset form fields
-      setUsername('');
-      setEmail('');
-      setPassword('');
+      setUsername("");
+      setEmail("");
+      setPassword("");
 
-      router.push('/');
+      router.push("/");
     } catch (err: any) {
       setValidationResponse(err);
     }
@@ -321,29 +327,29 @@ export default function Auth({ variant }: AuthPageProps) {
             </HeaderLogoWrapper>
             <HeaderInfoWrapper>
               <HeaderTitle>
-                {variant === 'login'
-                  ? 'Hello, Welcome Back'
-                  : 'Create an account'}
+                {variant === "login"
+                  ? "Hello, Welcome Back"
+                  : "Create an account"}
               </HeaderTitle>
               <HeaderSubTitle>
-                {variant === 'login'
-                  ? 'Happy to see you again, to use your account please login first.'
-                  : 'Start chatting with our easy registration!'}
+                {variant === "login"
+                  ? "Happy to see you again, to use your account please login first."
+                  : "Start chatting with our easy registration!"}
               </HeaderSubTitle>
             </HeaderInfoWrapper>
-            <Link href={variant === 'login' ? '/signup' : '/login'}>
+            <Link href={variant === "login" ? "/signup" : "/login"}>
               <AuthLink>
                 {`${
-                  variant === 'login' ? "Don't" : 'Already'
+                  variant === "login" ? "Don't" : "Already"
                 } have an account?`}
-                <span>{`${variant === 'login' ? ' Sign up' : ' Log in'}`}</span>
+                <span>{`${variant === "login" ? " Sign up" : " Log in"}`}</span>
               </AuthLink>
             </Link>
           </AuthHeaderWrapper>
           <AuthFormWrapper
-            onSubmit={variant === 'login' ? handleLogin : handleRegistration}
+            onSubmit={variant === "login" ? handleLogin : handleRegistration}
           >
-            {variant === 'signup' && (
+            {variant === "signup" && (
               <Input
                 variant="user"
                 width="100%"
@@ -382,7 +388,7 @@ export default function Auth({ variant }: AuthPageProps) {
             )}
             <Button
               variant="primary"
-              text={variant === 'login' ? 'Log in' : 'Sign up'}
+              text={variant === "login" ? "Log in" : "Sign up"}
               full
             />
           </AuthFormWrapper>

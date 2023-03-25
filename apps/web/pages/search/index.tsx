@@ -1,13 +1,14 @@
-import dynamic from 'next/dynamic';
-import PrivateRoute from '../../components/PrivateRoute';
-import Head from 'next/head';
-import { Header, StyledChatListItem } from 'ui';
-import StyledContainer from 'ui/components/StyledContainer';
-import { Users } from '../../../../packages/types/src/auth/user.types';
+import dynamic from "next/dynamic";
+import { Header, StyledChatListItem } from "ui";
+import StyledContainer from "ui/components/StyledContainer";
+import { Users } from "../../../../packages/types/src/auth/user.types";
+import PrivateRoute from "../../components/PrivateRoute";
 
 export async function getServerSideProps() {
   try {
-    const response = await fetch('http://localhost:8089/users');
+    const response = await fetch(
+      "https://magenta-tiger-chat-app.onrender.com/users"
+    );
     const users: Users[] = await response.json();
     return { props: { users } };
   } catch (error) {
@@ -17,7 +18,7 @@ export async function getServerSideProps() {
 }
 
 export default function Search({ users }: Users) {
-  const DynamicLayout = dynamic(() => import('../../components/Layout'), {
+  const DynamicLayout = dynamic(() => import("../../components/Layout"), {
     ssr: false,
   });
 

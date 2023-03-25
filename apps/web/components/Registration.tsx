@@ -19,7 +19,7 @@ export default function Registration() {
       password: password,
     };
 
-    fetch("http://localhost:8089/signup", {
+    fetch("https://magenta-tiger-chat-app.onrender.com/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
