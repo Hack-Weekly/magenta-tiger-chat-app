@@ -29,7 +29,7 @@ const AuthLayoutWrapper = styled.div`
 
 const AuthWrapper = styled.div`
   max-width: 950px;
-  max-height: 25rem;
+  max-height: 30rem;
   min-width: 16rem;
   width: 100%;
   margin: 1.5rem;
