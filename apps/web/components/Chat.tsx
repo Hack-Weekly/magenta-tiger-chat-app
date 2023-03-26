@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import { getSocket } from "./socket";
+import { useEffect, useState } from 'react';
+import styled, { css } from 'styled-components';
+import { Header, StyledChatListItem } from 'ui';
+import StyledContainer from 'ui/components/StyledContainer';
+import { useAuth } from '../context/AuthContext';
+import { getSocket, initiateSocket } from './socket';
 
 type Message = {
   from: string | undefined;
@@ -13,25 +16,105 @@ type ChatPartner = {
   active: boolean;
 };
 
+type SelectedPartnerProps = {
+  selectedPartner: string;
+};
+
+const ChatMainWrapper = styled.div`
+  display: flex;
+  height: 100vh;
+`;
+
+const ActiveUsersWrapper = styled.div<SelectedPartnerProps>`
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  overflow: auto;
+  ${({ selectedPartner }) => css`
+    display: ${selectedPartner && 'none'};
+  `}
+  @media (min-width: 800px) {
+    min-width: 20rem;
+    max-width: 35rem;
+    ${({ selectedPartner }) => css`
+      display: ${selectedPartner && 'initial'};
+    `}
+    border-right: 1px solid #e0e0e0;
+  }
+`;
+
+const ChatListWrapper = styled.ul`
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ChatWindowWrapper = styled.div<SelectedPartnerProps>`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #f3f3f3;
+  ${({ selectedPartner }) => css`
+    display: ${selectedPartner ? 'flex' : 'none'};
+  `}
+  @media (min-width: 800px) {
+    min-width: 20rem;
+    display: initial;
+  }
+`;
+const ChatWindowPlaceholder = styled.p`
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: center;
+  color: #8b8b8b;
+  font-weight: 300;
+  font-family: 'Open-Sans', sans-serif;
+`;
+
+const ChatWindow = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: flex-start;
+`;
+
 export default function Chat() {
   const { user, logout } = useAuth();
-  const [partners, setPartners] = useState<ChatPartner[]>([]);
-  const [selectedPartner, setSelectedPartner] = useState<string>("");
-  const [messages, setMessages] = useState<string>("");
+  const [partners, setPartners] = useState<ChatPartner[]>([
+    { username: 'Vlad', active: false },
+    { username: 'Swappnet', active: false },
+    { username: 'Josh', active: false },
+    { username: 'Dude', active: false },
+    { username: 'Kevin', active: false },
+  ]);
+
+  const [selectedPartner, setSelectedPartner] = useState<string>('1');
+  const [messages, setMessages] = useState<string>('');
 
   useEffect(() => {
     const socket = getSocket();
 
-    socket.emit("login", user?.username);
+    socket.emit('login', user?.username);
 
-    socket.on("partners", (partners: ChatPartner[]) => {
+    socket.on('partners', (partners: ChatPartner[]) => {
       const allOnlineUsers = partners;
 
       setPartners(allOnlineUsers);
       console.log(allOnlineUsers);
     });
 
-    socket.on("message", (message: Message) => {
+    socket.on('message', (message: Message) => {
       if (message.from === selectedPartner || message.to === selectedPartner) {
         setMessages((prevMessages) =>
           prevMessages.concat(`${message.from}: ${message.text}\n`)
@@ -40,15 +123,15 @@ export default function Chat() {
     });
 
     return () => {
-      socket.emit("logout", user?.username);
+      socket.emit('logout', user?.username);
       socket.disconnect();
     };
   }, [user?.username, selectedPartner]);
 
   function handleSelectPartner(partner: string) {
     setSelectedPartner(partner);
-    setMessages("");
-    getSocket().emit("join", { from: user?.username, to: partner });
+    setMessages('');
+    getSocket().emit('join', { from: user?.username, to: partner });
   }
 
   function handleSendMessage() {
@@ -57,34 +140,34 @@ export default function Chat() {
       to: selectedPartner,
       text: messages,
     };
-    getSocket().emit("message", message);
-    setMessages("");
+    getSocket().emit('message', message);
+    setMessages('');
   }
 
   console.log(partners);
 
   return (
-    <section>
-      <div>
-        <h1>Chat room</h1>
-        <div>
-          <p>Select a chat partner:</p>
-          <ul>
+    <StyledContainer variant="flex-column">
+      <ChatMainWrapper>
+        <ActiveUsersWrapper selectedPartner={selectedPartner}>
+          <Header
+            variant="welcome"
+            userName={user?.username}
+            description="Select a chat partner"
+          />
+          <ChatListWrapper>
             {partners.map((partner) => (
-              <li key={partner.username}>
-                <button
-                  disabled={partner.active}
-                  onClick={() => handleSelectPartner(partner.username)}
-                >
-                  {partner.username}
-                </button>
-              </li>
+              <StyledChatListItem
+                variant="chat"
+                title={partner.username}
+                description=""
+              />
             ))}
-          </ul>
-        </div>
-        <div>
-          {selectedPartner && (
-            <div>
+          </ChatListWrapper>
+        </ActiveUsersWrapper>
+        <ChatWindowWrapper selectedPartner={selectedPartner}>
+          {selectedPartner ? (
+            <ChatWindow>
               <h2>Chatting with {selectedPartner}</h2>
               <ul>
                 <li>
@@ -99,10 +182,14 @@ export default function Chat() {
                   <button onClick={handleSendMessage}>Send</button>
                 </li>
               </ul>
-            </div>
+            </ChatWindow>
+          ) : (
+            <ChatWindowPlaceholder>
+              Pick a chat to start messaging
+            </ChatWindowPlaceholder>
           )}
-        </div>
-      </div>
-    </section>
+        </ChatWindowWrapper>
+      </ChatMainWrapper>
+    </StyledContainer>
   );
 }

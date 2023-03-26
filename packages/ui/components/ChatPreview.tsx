@@ -16,19 +16,29 @@ const formatTime = (timestamp: number): string => {
   return `${hours}:${minutes}`;
 };
 
-const StyledChatPreview = styled.li`
-  max-width: 960px; // Remove later
+const StyledChatContainer = styled.button`
+  max-width: 94%;
   font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
-  list-style: none;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem;
   font-size: 16px;
   border-radius: 10px;
+  border: none;
+  transition: 0.2s;
   cursor: pointer;
+  background-color: transparent;
+  &:hover {
+    background-color: #fafafa;
+  }
+  &:active {
+    background-color: #f3f3f3;
+  }
+
+  @media (min-width: 650px) {
+    max-width: 512px;
+  }
 `;
 
 const StyledUserContainer = styled.button`
@@ -163,7 +173,7 @@ export const StyledChatListItem = ({
           </StyledInfoWrapper>
         </StyledUserContainer>
       ) : (
-        <StyledChatPreview onClick={onClick}>
+        <StyledChatContainer onClick={onClick}>
           {variant === 'edit' && (
             <StyledEditWrapper>
               {/* !DELETE chat btn component*/}
@@ -192,8 +202,7 @@ export const StyledChatListItem = ({
               {/* !ADD  DECLINE chat btn component*/}
             </StyledEditWrapper>
           )}
-          <StyledDate>{formatTime(timestamp)}</StyledDate>
-        </StyledChatPreview>
+        </StyledChatContainer>
       )}
     </>
   );

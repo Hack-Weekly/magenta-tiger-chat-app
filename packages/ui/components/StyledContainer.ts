@@ -9,6 +9,14 @@ const StyledContainer = styled.div<ContainerVariant>`
     `}
 
   ${({ variant }) =>
+    variant === 'flex-column' &&
+    css`
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    `}
+
+  ${({ variant }) =>
     variant === 'grid' &&
     css`
       display: grid;
