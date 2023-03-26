@@ -165,11 +165,6 @@ export default function Web() {
         }
     }, [user])
 
-    const handleChange = e => {
-        e.target.defaultValue = e.target.value
-        setName(e.target.value)
-    }
-
     return (
         <PrivateRoute>
             <DynamicLayout>

@@ -8,10 +8,8 @@ This turborepo uses [npm](https://www.npmjs.com/) as a package manager. It inclu
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
 - `web`: another [Next.js](https://nextjs.org/) app
-- `api`: backend Node.js connected with MongoDB app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
+- `ui`: a stub React component library shared by `web`
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
@@ -45,8 +43,6 @@ api: npm run api
 ```
 
 ### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 
 By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
 

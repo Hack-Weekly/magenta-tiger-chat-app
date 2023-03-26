@@ -36,7 +36,11 @@ export class Auth implements AuthController {
       const compare = await bcrypt.compare(password, user.password);
       if (compare) {
         const token = jwt.sign({ user }, "secrete", { expiresIn: "30d" });
-        return res.json({ status: 200, token: token });
+        return res.json({
+          status: 200,
+          token: token,
+          user: { _id: user._id, email: user.email, username: user.username },
+        });
       }
       return res.json({ message: "wrong password" });
     } else {
