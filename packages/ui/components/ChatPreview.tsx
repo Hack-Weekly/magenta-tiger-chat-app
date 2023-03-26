@@ -29,9 +29,6 @@ const StyledChatPreview = styled.li`
   font-size: 16px;
   border-radius: 10px;
   cursor: pointer;
-  &:hover {
-    background-color: #ececec18;
-  }
 `;
 
 const StyledUserContainer = styled.button`
@@ -46,6 +43,8 @@ const StyledUserContainer = styled.button`
   border-radius: 10px;
   background-color: var(--btn-dim);
   border: none;
+  transition: 0.2s;
+  cursor: pointer;
   &:hover {
     background-color: var(--btn-primary-text);
   }
@@ -68,7 +67,7 @@ const StyledImageWrapper = styled.div`
   height: 3rem;
   border-radius: 50%;
   border: none;
-  background-color: #dddddd;
+  background-color: #cecece;
 `;
 
 const StyledInfoWrapper = styled.div`
