@@ -14,7 +14,7 @@
     "lint": {
       "outputs": []
     },
-    "dev": { "output": [] }
+    "dev": { "outputs": [] }
   },
   "globalDependencies": ["tsconfig.json", "**/.env.*local", ".env"]
 }
