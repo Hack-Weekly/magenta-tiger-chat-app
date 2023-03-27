@@ -186,7 +186,6 @@ export default function Chat() {
               <StyledChatListItem
                 key={partner.username}
                 variant="chat"
-                key={partner.username}
                 title={partner.username}
                 description=""
                 onClick={() => handleSelectPartner(partner.username)}
