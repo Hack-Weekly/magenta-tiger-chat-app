@@ -30,10 +30,12 @@
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/node": "^18.15.3",
+    "@types/node": "^18.15.3",
     "@types/react-fontawesome": "^1.6.5",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "dotenv-cli": "^7.1.0",
+    "g": "^2.0.1",
     "nodemon": "^2.0.21",
     "socket.io-client": "^4.6.1",
     "styled-components": "^5.3.9"
