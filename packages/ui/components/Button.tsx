@@ -103,7 +103,7 @@ const StyledButton = styled.button<StyledButtonProps>`
         ? '0.8rem'
         : size === 'middle'
         ? '1rem'
-        : '2rem'};
+        : '1.5rem'};
 
       span {
         ${variant === 'navIcon' && `font-size: .9rem`}

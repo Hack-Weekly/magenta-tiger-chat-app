@@ -1,6 +1,8 @@
+import { faFile } from '@fortawesome/free-regular-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { Header, StyledChatListItem } from 'ui';
+import { Button, Header, Input, StyledChatListItem } from 'ui';
 import StyledContainer from 'ui/components/StyledContainer';
 import { useAuth } from '../context/AuthContext';
 import { getSocket, initiateSocket } from './socket';
@@ -60,6 +62,7 @@ const ChatWindowWrapper = styled.div<SelectedPartnerProps>`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 0.5rem 0.8rem;
   background-color: #f3f3f3;
   ${({ selectedPartner }) => css`
     display: ${selectedPartner ? 'flex' : 'none'};
@@ -81,12 +84,26 @@ const ChatWindowPlaceholder = styled.p`
 `;
 
 const ChatWindow = styled.div`
+  position: relative;
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-self: center;
   justify-content: flex-start;
+`;
+
+const ChatFormWrapper = styled.div`
+  position: absolute;
+  bottom: 6.5rem;
+  width: 100%;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  margin: 0 0.3rem;
+  @media (min-width: 650px) {
+    bottom: 1.5rem;
+  }
 `;
 
 export default function Chat() {
@@ -99,7 +116,7 @@ export default function Chat() {
     { username: 'Kevin', active: false },
   ]);
 
-  const [selectedPartner, setSelectedPartner] = useState<string>('1');
+  const [selectedPartner, setSelectedPartner] = useState<string>('');
   const [messages, setMessages] = useState<string>('');
 
   useEffect(() => {
@@ -134,14 +151,24 @@ export default function Chat() {
     getSocket().emit('join', { from: user?.username, to: partner });
   }
 
-  function handleSendMessage() {
+  function handleSendMessage(e: React.FormEvent) {
+    e.preventDefault();
     const message: Message = {
       from: user?.username,
       to: selectedPartner,
       text: messages,
     };
+
     getSocket().emit('message', message);
     setMessages('');
+  }
+
+  function handleMessageEnter(e: React.ChangeEvent<HTMLInputElement>) {
+    setMessages(e.target.value);
+  }
+
+  function handleLeaveRoom() {
+    setSelectedPartner('');
   }
 
   console.log(partners);
@@ -158,9 +185,11 @@ export default function Chat() {
           <ChatListWrapper>
             {partners.map((partner) => (
               <StyledChatListItem
+                key={partner.username}
                 variant="chat"
                 title={partner.username}
                 description=""
+                onClick={() => handleSelectPartner(partner.username)}
               />
             ))}
           </ChatListWrapper>
@@ -168,20 +197,23 @@ export default function Chat() {
         <ChatWindowWrapper selectedPartner={selectedPartner}>
           {selectedPartner ? (
             <ChatWindow>
-              <h2>Chatting with {selectedPartner}</h2>
-              <ul>
-                <li>
-                  <textarea
-                    value={messages}
-                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                      setMessages(e.target.value)
-                    }
-                  />
-                </li>
-                <li>
-                  <button onClick={handleSendMessage}>Send</button>
-                </li>
-              </ul>
+              <Button
+                variant="icon"
+                icon={faArrowLeft}
+                size="large"
+                onClick={handleLeaveRoom}
+              />
+              <ChatFormWrapper onSubmit={handleSendMessage}>
+                <Button variant="icon" icon={faFile} />
+                <Input
+                  variant="send"
+                  width="100%"
+                  value={messages}
+                  onChange={handleMessageEnter}
+                  onClick={handleSendMessage}
+                  required={false}
+                />
+              </ChatFormWrapper>
             </ChatWindow>
           ) : (
             <ChatWindowPlaceholder>
