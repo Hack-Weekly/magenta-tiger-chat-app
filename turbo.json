@@ -8,12 +8,13 @@
     },
     "web#build": {
       "dependsOn": ["^build"],
-      "env": ["API_URL"],
+      "env": ["API_URL", "MONGODB_CONNECTION"],
       "outputs": [".next/**"]
     },
     "lint": {
       "outputs": []
-    }
+    },
+    "dev": { "outputs": [] }
   },
   "globalDependencies": ["tsconfig.json", "**/.env.*local", ".env"]
 }

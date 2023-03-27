@@ -1,50 +1,52 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import { useAuth } from "../context"
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useAuth } from "../context";
 
-import { Button, Input } from "ui"
+import { Button, Input } from "ui";
 
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
-import Banner from "ui/assets/auth-banner.webp"
-import Logo from "ui/assets/logo.webp"
+import Banner from "ui/assets/auth-banner.webp";
+import Logo from "ui/assets/logo.webp";
 
-import { AuthPageProps } from "../../../packages/types/src/props/auth-page-props.types"
+import { AuthPageProps } from "../../../packages/types/src/props/auth-page-props.types";
 
 const AuthLayoutWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #f3f3f3;
+  overflow: auto;
+  @media (min-height: 400px) and (min-width: 680px) {
     height: 100vh;
-    width: 100%;
-    background-color: #f3f3f3;
-    @media (min-height: 400px) and (min-width: 680px) {
-        height: 100vh;
-    }
-`
+  }
+`;
 
 const AuthWrapper = styled.div`
-    max-width: 950px;
+  max-width: 950px;
+  max-height: 30rem;
+  min-width: 16rem;
+  width: 100%;
+  margin: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #f8f8f8;
+  box-shadow: 0px 0px 21px -3px rgba(0, 0, 0, 0.09);
+  border-radius: 15px;
+  padding: 0.7rem;
+  @media (min-width: 680px) {
+    flex-direction: row;
     max-height: 40rem;
-    min-width: 16rem;
-    width: 100%;
-    margin: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background-color: #f8f8f8;
-    box-shadow: 0px 0px 21px -3px rgba(0, 0, 0, 0.09);
-    border-radius: 15px;
-    padding: 0.7rem;
-    @media (min-width: 680px) {
-        flex-direction: row;
-    }
-`
+  }
+`;
 
 const AuthContentWrapper = styled.div`
     display: flex;
@@ -175,20 +177,12 @@ export default function Auth({ variant }: AuthPageProps) {
     const router = useRouter()
     const apiUrl = process.env.API_URL
 
-    const handleTogglePasswordVisibility = () => {
-        setShowPassword(prevState => !prevState)
-    }
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
-    useEffect(() => {
-        // redirect to home if already logged in
-        if (user) {
-            router.push("/")
-        }
-    }, [])
-
-    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-        //FIXME Problem with login - return 'undefined'
-        e.preventDefault()
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
         const user = {
             email: email,

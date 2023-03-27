@@ -19,6 +19,7 @@ const NavbarContainer = styled.nav`
   margin: 0;
   padding-bottom: 1rem;
   padding-top: 0.2rem;
+  height: 4rem;
   @media (min-width: 650px) {
     position: static;
     flex-direction: column;
