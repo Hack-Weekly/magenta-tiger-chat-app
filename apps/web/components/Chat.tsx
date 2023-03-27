@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 import { Button, Header, Input, StyledChatListItem } from 'ui';
 import StyledContainer from 'ui/components/StyledContainer';
 import { useAuth } from '../context/AuthContext';
-import { getSocket, initiateSocket } from './socket';
+import { getSocket } from './socket';
 
 type Message = {
   from: string | undefined;
@@ -116,7 +116,7 @@ export default function Chat() {
     { username: 'Kevin', active: false },
   ]);
 
-  const [selectedPartner, setSelectedPartner] = useState<string>('');
+  const [selectedPartner, setSelectedPartner] = useState<string>('1');
   const [messages, setMessages] = useState<string>('');
 
   useEffect(() => {
@@ -158,7 +158,6 @@ export default function Chat() {
       to: selectedPartner,
       text: messages,
     };
-
     getSocket().emit('message', message);
     setMessages('');
   }
@@ -187,6 +186,7 @@ export default function Chat() {
               <StyledChatListItem
                 key={partner.username}
                 variant="chat"
+                key={partner.username}
                 title={partner.username}
                 description=""
                 onClick={() => handleSelectPartner(partner.username)}
