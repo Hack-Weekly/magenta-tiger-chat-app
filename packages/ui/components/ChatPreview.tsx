@@ -67,6 +67,19 @@ const StyledUserContainer = styled.button`
   }
 `;
 
+const StyledUserRoomContainer = styled.div`
+  /* Something is wrong with the parent container. TODO for later */
+  max-width: 100%;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.5rem;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+`;
+
 const StyledImageWrapper = styled.div`
   margin-left: 0.2rem;
   position: relative;
@@ -172,6 +185,23 @@ export const StyledChatListItem = ({
             <StyledTitle>{title}</StyledTitle>
           </StyledInfoWrapper>
         </StyledUserContainer>
+      ) : variant === 'chat-room' ? (
+        <StyledUserRoomContainer>
+          <StyledImageWrapper>
+            {imageUrl ? (
+              <StyledImage src={imageUrl} alt="" />
+            ) : (
+              <StyledPlaceholder>{getFirstLetter(title)}</StyledPlaceholder>
+            )}
+            {isNotified && <StyledNotification />}
+          </StyledImageWrapper>
+          <StyledInfoWrapper>
+            <StyledTitle>{title}</StyledTitle>
+            <StyledDescription>
+              {variant === 'chat-room' && `You're chatting with ${title}`}
+            </StyledDescription>
+          </StyledInfoWrapper>
+        </StyledUserRoomContainer>
       ) : (
         <StyledChatContainer onClick={onClick}>
           {variant === 'edit' && (

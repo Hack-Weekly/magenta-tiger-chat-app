@@ -94,15 +94,29 @@ const ChatWindow = styled.div`
 `;
 
 const ChatFormWrapper = styled.div`
-  position: absolute;
-  bottom: 6.5rem;
   width: 100%;
   display: flex;
   align-self: center;
   justify-content: center;
   margin: 0 0.3rem;
+`;
+
+const ChatWindowHeader = styled.div`
+  width: 100%;
+`;
+
+const ChatWindowBody = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+`;
+const ChatWindowFooter = styled.div`
+  width: 100%;
+  margin-bottom: 6.5rem;
   @media (min-width: 650px) {
-    bottom: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -116,7 +130,7 @@ export default function Chat() {
     { username: 'Kevin', active: false },
   ]);
 
-  const [selectedPartner, setSelectedPartner] = useState<string>('1');
+  const [selectedPartner, setSelectedPartner] = useState<string>('');
   const [messages, setMessages] = useState<string>('');
 
   useEffect(() => {
@@ -196,23 +210,32 @@ export default function Chat() {
         <ChatWindowWrapper selectedPartner={selectedPartner}>
           {selectedPartner ? (
             <ChatWindow>
-              <Button
-                variant="icon"
-                icon={faArrowLeft}
-                size="large"
-                onClick={handleLeaveRoom}
-              />
-              <ChatFormWrapper onSubmit={handleSendMessage}>
-                <Button variant="icon" icon={faFile} />
-                <Input
-                  variant="send"
-                  width="100%"
-                  value={messages}
-                  onChange={handleMessageEnter}
-                  onClick={handleSendMessage}
-                  required={false}
+              <ChatWindowHeader>
+                <Button
+                  variant="icon"
+                  icon={faArrowLeft}
+                  size="large"
+                  onClick={handleLeaveRoom}
                 />
-              </ChatFormWrapper>
+                <StyledChatListItem
+                  variant="chat-room"
+                  title={selectedPartner}
+                />
+              </ChatWindowHeader>
+              <ChatWindowBody></ChatWindowBody>
+              <ChatWindowFooter>
+                <ChatFormWrapper onSubmit={handleSendMessage}>
+                  <Button variant="icon" icon={faFile} />
+                  <Input
+                    variant="send"
+                    width="100%"
+                    value={messages}
+                    onChange={handleMessageEnter}
+                    onClick={handleSendMessage}
+                    required={false}
+                  />
+                </ChatFormWrapper>
+              </ChatWindowFooter>
             </ChatWindow>
           ) : (
             <ChatWindowPlaceholder>
